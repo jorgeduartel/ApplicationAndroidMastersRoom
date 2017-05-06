@@ -4,6 +4,7 @@ package com.example.jorgeduarte.appmastersroom;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaRecorder;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -31,6 +32,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -44,9 +46,14 @@ public class MainActivity extends AppCompatActivity {
     private String ArduinoTemperature;
     private String humidity;
     private String pressure;
+    private MediaRecorder recorder;
     private String temperature;
     private Context context;
     private String people;
+    private TextView tvNoiseOutput;
+    private double amplitudeDb;
+    private double amplitudeDbF;
+    private volatile Thread verifyNoise;
 
     // URL to get contacts JSON
     private static String url = "http://192.168.201.100:8080/all";
@@ -96,6 +103,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //  new GetData().execute();
+        // recorder = new MediaRecorder();
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        recorder.setOutputFile("/dev/null");
+        try {
+            recorder.prepare();
+            recorder.start();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        verifyNoiseThread();
 
 
 
@@ -135,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                     Log.e(TAG, "ArduinoBright: " + ArduinoBright);
-
                     update();
 
                 } catch (final JSONException e) {
@@ -193,16 +214,39 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void verifyNoiseThread(){
+        this.verifyNoise = new Thread(new Runnable() {
+            @Override
+            public void run () {
+                while(true){
+                    try {
+                        int amplitude = recorder.getMaxAmplitude();
+                        amplitudeDb = 20 * Math.log10((double) Math.abs(amplitude));
+                        if(amplitudeDb>=0) {
+                            amplitudeDbF =  amplitudeDb;
+                        }
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        verifyNoise.start();
+    }
+
     public void update(){
         TextView brightOutput = (TextView) findViewById(R.id.textArduinoBright);
         TextView temperatureOutput = (TextView) findViewById(R.id.textTemperature);
         TextView humidityOutput = (TextView) findViewById(R.id.textHumidity);
         TextView pressureOutput = (TextView) findViewById(R.id.textPressure);
+        tvNoiseOutput = (TextView) findViewById(R.id.tvNoise);
 
         brightOutput.append(ArduinoBright);
         temperatureOutput.append(ArduinoTemperature);
         humidityOutput.append(humidity);
         pressureOutput.append(pressure);
+        tvNoiseOutput.setText("Noise: " +amplitudeDbF);
     }
 
 
