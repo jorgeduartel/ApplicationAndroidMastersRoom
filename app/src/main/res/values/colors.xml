@@ -6,4 +6,6 @@
     <color name="gray">#bb020202</color>
     <color name="Black_F2">#f2000000</color>
     <color name="White">#FFFF</color>
+    <color name="Black_100">#312B2B</color>
+    <color name="Blue_People">#3D4B5E</color>
 </resources>

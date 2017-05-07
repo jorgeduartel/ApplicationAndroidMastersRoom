@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/Black_100"
     tools:context="com.example.jorgeduarte.appmastersroom.Activity_PeopleRoom">
 
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:theme="@style/your_own_name.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -29,26 +29,50 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/peopleLable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/buttonSend"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="225dp"
-            android:ems="10"
-            android:inputType="number" />
+            android:layout_marginBottom="140dp"
+            app:srcCompat="@drawable/rooom4" />
 
         <Button
             android:id="@+id/buttonSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/peopleLable"
-            android:layout_alignRight="@+id/peopleLable"
-            android:layout_below="@+id/peopleLable"
-            android:layout_marginTop="39dp"
-            android:text="Send" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="20dp"
+            android:background="@color/Blue_People"
+            android:text="Send"
+            android:textColor="@color/White" />
+
+        <EditText
+            android:id="@+id/peopleLable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/buttonSend"
+            android:layout_alignBottom="@+id/buttonSend"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:backgroundTint="@color/Blue_People"
+            android:ems="10"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView7"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="28dp"
+            android:text="Contar o numero de pessoas na sala e enviar"
+            android:textColor="@color/White" />
+
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

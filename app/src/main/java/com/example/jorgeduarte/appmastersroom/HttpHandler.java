@@ -1,5 +1,7 @@
 package com.example.jorgeduarte.appmastersroom;
 
+import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -17,6 +19,8 @@ import java.net.URL;
  * www.androidhive.info
  */
 public class HttpHandler { //add
+
+
 
     private static final String TAG = HttpHandler.class.getSimpleName();
 
