@@ -9,23 +9,37 @@ import android.content.Context;
 import android.content.Intent;
 import android.icu.text.DecimalFormat;
 import android.media.Image;
+import android.media.MediaRecorder;
+import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -54,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+
         if (android.os.Build.VERSION.SDK_INT >= 21) { // Jorge
             Window window = this.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -62,31 +77,49 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+
+       /* WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+        int numberOfLevels = 5;
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-        String name = wifiInfo.getSSID();
-        int rssi = wifiInfo.getRssi();
-        int speed = wifiInfo.getLinkSpeed();
-        speedWifi = 21;
+        int level = WifiManager.calculateSignalLevel(wifiInfo.getRssi(), numberOfLevels);
+        Log.e(TAG, "Wifi: " + level);*/
 
-        Log.d("WifiReceiver", "Don't have Wifi Connection"+name+"  speed"+speed);
+       /* GridView gridview = (GridView) findViewById(R.id.gridview);
+        gridview.setAdapter(new ImageAdapter(this));
 
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                Log.e(TAG, "ArduinoBright: " + ArduinoBright);
 
-
-
+            }
+        });*/
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 startActivity(new Intent(getApplicationContext(),Activity_PeopleRoom.class));
 
             }
         });
 
         //  new GetData().execute();
+        // recorder = new MediaRecorder();
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        recorder.setOutputFile("/dev/null");
+        try {
+            recorder.prepare();
+            recorder.start();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        verifyNoiseThread();
 
         update();
 
@@ -209,6 +242,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public void verifyNoiseThread(){
+        this.verifyNoise = new Thread(new Runnable() {
+            @Override
+            public void run () {
+                while(true){
+                    try {
+                        int amplitude = recorder.getMaxAmplitude();
+                        amplitudeDb = 20 * Math.log10((double) Math.abs(amplitude));
+                        if(amplitudeDb>=0) {
+                            amplitudeDbF =  amplitudeDb;
+                        }
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        verifyNoise.start();
     }
 
     public void update(){
