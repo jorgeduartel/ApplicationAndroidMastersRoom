@@ -57,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
     private int speedWifi;
     private double noise = 1;
 
+
+
+    private MediaRecorder recorder;
+
+    private TextView tvNoiseOutput;
+    private double amplitudeDb;
+    private double amplitudeDbF;
+    private volatile Thread verifyNoise;
     // URL to get contacts JSON
     private static String url = "http://192.168.201.100:8080/all";
 
@@ -103,9 +111,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+        update();
         //  new GetData().execute();
-        // recorder = new MediaRecorder();
+
+        recorder = new MediaRecorder();
+
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
@@ -121,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
         verifyNoiseThread();
 
-        update();
+
 
     }
 
@@ -254,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
                         amplitudeDb = 20 * Math.log10((double) Math.abs(amplitude));
                         if(amplitudeDb>=0) {
                             amplitudeDbF =  amplitudeDb;
+                            noise = amplitudeDb;
                         }
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -265,6 +276,8 @@ public class MainActivity extends AppCompatActivity {
         verifyNoise.start();
     }
 
+
+
     public void update(){
         TextView brightOutput = (TextView) findViewById(R.id.textArduinoBright);
         TextView temperatureOutput = (TextView) findViewById(R.id.textTemperature);
@@ -274,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
         TextView noiseOutput = (TextView) findViewById(R.id.textNoise);
         TextView peopleOutput = (TextView) findViewById(R.id.textPeople);
 
-        ImageView imageBrightness = (ImageView) findViewById(R.id.imageBrightness);
+       ImageView imageBrightness = (ImageView) findViewById(R.id.imageBrightness);
         ImageView imageThermometer = (ImageView) findViewById(R.id.imageThermometer);
         ImageView imageSpeedWifi = (ImageView) findViewById(R.id.imageSpeedWifi);
         ImageView imageNoise = (ImageView) findViewById(R.id.imageNoise);

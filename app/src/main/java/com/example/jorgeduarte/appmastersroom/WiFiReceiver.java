@@ -49,16 +49,16 @@ class WifiReceiver extends BroadcastReceiver {
         PendingIntent pintent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
 
         NotificationCompat.Builder mBuilder =
-            new NotificationCompat.Builder(context)
-                    .setSmallIcon(R.drawable.team)
-                    .setContentTitle("Masters Room")
-                    .setContentText("Please count the number of people in the room")
-                    .setContentIntent(pintent);
+                new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.drawable.team)
+                        .setContentTitle("Masters Room")
+                        .setContentText("Please count the number of people in the room")
+                        .setContentIntent(pintent);
 
 
 
 
-         mNotificationManager.notify(1, mBuilder.build());
+        mNotificationManager.notify(1, mBuilder.build());
     }
 
     public void checkSpeedWifi(Context context){
