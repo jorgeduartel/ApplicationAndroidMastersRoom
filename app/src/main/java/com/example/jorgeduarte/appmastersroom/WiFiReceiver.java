@@ -31,12 +31,12 @@ class WifiReceiver extends BroadcastReceiver {
         int rssi = wifiInfo.getRssi();
         int speed = wifiInfo.getLinkSpeed();
 
-        if (name.contains("WIFI_Quarto_JD")){
+        if (name.contains("e-MEI")){
 
 
             Log.d("WifiReceiver", "Don't have Wifi Connection"+name+"  speed"+speed);
 
-            //checkSpeedWifi(context);
+            checkSpeedWifi(context);
             sendNotification(context);
 
         }

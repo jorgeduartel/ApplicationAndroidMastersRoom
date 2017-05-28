@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sala2"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
@@ -12,17 +13,17 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray"
+
+        android:background="@drawable/sala2"
         android:orientation="vertical"
-        tools:context="com.example.jorgeduarte.appmastersroom.MainActivity">
-
-
+        tools:context="com.example.jorgeduarte.appmastersroom.MainActivity"
+        tools:ignore="ScrollViewSize">
 
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton2"
             android:layout_width="73dp"
-            android:layout_height="55dp"
+            android:layout_height="73dp"
             android:layout_gravity="top|left"
             android:layout_margin="@dimen/fab_margin"
             android:layout_marginRight="16dp"
@@ -31,16 +32,11 @@
             app:layout_anchorGravity="bottom|right"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_myplaces"
+            app:srcCompat="@drawable/countpeople4"
+            tools:ignore="RtlHardcoded,UnknownIdInLayout"
             tools:onClick="postPeople" />
 
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="421dp"
-            android:layout_height="820dp"
-            app:srcCompat="@drawable/sala2"
-            tools:layout_editor_absoluteX="-61dp"
-            tools:layout_editor_absoluteY="-40dp" />
+
 
         <TextView
             android:id="@+id/textArduinoBright"
@@ -53,7 +49,7 @@
             android:textColor="@color/White"
             android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageBrightness"
+            app:layout_constraintTop_toBottomOf="@+id/buttonBrightness"
             tools:text="brigth" />
 
         <TextView
@@ -67,43 +63,48 @@
             android:textColor="@color/White"
             android:textSize="24sp"
             app:layout_constraintLeft_toRightOf="@+id/textArduinoBright"
-            app:layout_constraintTop_toBottomOf="@+id/imageThermometer"
+            app:layout_constraintTop_toBottomOf="@+id/buttonThermometer"
             tools:text="Temperature" />
 
-        <ImageView
-            android:id="@+id/imageBrightness"
+        <Button
+            android:id="@+id/buttonBrightness"
             android:layout_width="126dp"
-            android:layout_height="111dp"
+            android:layout_height="126dp"
             android:layout_marginLeft="50dp"
             android:layout_marginStart="50dp"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/brightness"
+            android:onClick="sensorFactory"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:srcCompat="@drawable/brightness"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="70dp" />
+            app:srcCompat="@drawable/brightness" />
 
-        <ImageView
-            android:id="@+id/imageThermometer"
+        <Button
+            android:id="@+id/buttonThermometer"
             android:layout_width="126dp"
-            android:layout_height="111dp"
-            app:srcCompat="@drawable/thermometer"
-            app:layout_constraintLeft_toRightOf="@+id/imageBrightness"
+            android:layout_height="126dp"
             android:layout_marginLeft="13dp"
             android:layout_marginStart="13dp"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/thermometer"
+            android:onClick="sensorFactory"
+            app:layout_constraintLeft_toRightOf="@+id/buttonBrightness"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="70dp" />
+            app:srcCompat="@drawable/thermometer" />
 
 
-
-        <ImageView
-            android:id="@+id/imageView2"
+        <Button
+            android:id="@+id/buttonPressur"
             android:layout_width="126dp"
-            android:layout_height="111dp"
-            app:srcCompat="@drawable/pressure"
-            android:layout_marginTop="30dp"
-            app:layout_constraintTop_toBottomOf="@+id/textArduinoBright"
+            android:layout_height="126dp"
             android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/pressure"
+            android:onClick="sensorFactory"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginStart="50dp" />
+            app:layout_constraintTop_toBottomOf="@+id/textArduinoBright"
+            app:srcCompat="@drawable/pressure" />
 
         <TextView
             android:id="@+id/textPeople"
@@ -117,7 +118,7 @@
             android:textColor="@color/White"
             android:textSize="24sp"
             app:layout_constraintLeft_toRightOf="@+id/textView3"
-            app:layout_constraintTop_toBottomOf="@+id/imagePeople"
+            app:layout_constraintTop_toBottomOf="@+id/buttonPeople"
             tools:text="People" />
 
         <TextView
@@ -128,12 +129,12 @@
             android:layout_marginStart="9dp"
             android:layout_marginTop="10dp"
             android:lineSpacingExtra="24sp"
-            android:text="Settings"
+            android:text="@string/settings"
             android:textAlignment="center"
             android:textColor="@color/White"
             android:textSize="24sp"
             app:layout_constraintLeft_toRightOf="@+id/textNoise"
-            app:layout_constraintTop_toBottomOf="@+id/imageSettings"
+            app:layout_constraintTop_toBottomOf="@+id/buttonSettings"
             tools:text="Settings" />
 
         <TextView
@@ -148,7 +149,7 @@
             android:textColor="@color/White"
             android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageSpeedWifi"
+            app:layout_constraintTop_toBottomOf="@+id/buttonSpeedWifi"
             tools:text="SpeedWifi" />
 
         <TextView
@@ -164,7 +165,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             tools:text="Noise"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/imageNoise" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonNoise" />
 
         <TextView
             android:id="@+id/textSpeedWifi"
@@ -178,7 +179,7 @@
             android:textColor="@color/White"
             android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageSpeedWifi"
+            app:layout_constraintTop_toBottomOf="@+id/buttonSpeedWifi"
             tools:text="SpeedWifi" />
 
         <TextView
@@ -192,7 +193,7 @@
             android:textColor="@color/White"
             android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/buttonPressur"
             tools:text="textPressure" />
 
         <TextView
@@ -206,63 +207,74 @@
             android:textColor="@color/White"
             android:textSize="24sp"
             app:layout_constraintLeft_toRightOf="@+id/textPressure"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+            app:layout_constraintTop_toBottomOf="@+id/buttonHumidity"
             tools:text="Humidity:" />
 
-        <ImageView
-            android:id="@+id/imageView3"
+        <Button
+            android:id="@+id/buttonHumidity"
             android:layout_width="126dp"
-            android:layout_height="111dp"
-            app:srcCompat="@drawable/airhumidity"
-            app:layout_constraintLeft_toRightOf="@+id/imageView2"
+            android:layout_height="126dp"
             android:layout_marginLeft="11dp"
-            android:layout_marginTop="65dp"
-            app:layout_constraintTop_toBottomOf="@+id/imageThermometer"
-            android:layout_marginStart="13dp" />
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="68dp"
+            android:background="@drawable/airhumidity"
+            android:onClick="sensorFactory"
+            app:layout_constraintLeft_toRightOf="@+id/buttonPressur"
+            app:layout_constraintTop_toBottomOf="@+id/buttonThermometer"
+            app:srcCompat="@drawable/airhumidity" />
 
-        <ImageView
-            android:id="@+id/imageSpeedWifi"
+        <Button
+            android:id="@+id/buttonSpeedWifi"
             android:layout_width="126dp"
-            android:layout_height="111dp"
-            app:srcCompat="@drawable/wifi"
-            android:layout_marginTop="59dp"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
-            android:layout_marginLeft="50dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginStart="50dp" />
-
-        <ImageView
-            android:id="@+id/imageNoise"
-            android:layout_width="126dp"
-            android:layout_height="111dp"
+            android:layout_height="126dp"
             android:layout_marginLeft="50dp"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="59dp"
+            android:background="@drawable/wifi"
+            android:onClick="sensorFactory"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonPressur"
+            app:srcCompat="@drawable/wifi" />
+
+        <Button
+            android:id="@+id/buttonNoise"
+            android:layout_width="126dp"
+            android:layout_height="126dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/noise_red"
+            android:onClick="sensorFactory"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
             app:srcCompat="@drawable/noise_red" />
 
-        <ImageView
-            android:id="@+id/imagePeople"
+        <Button
+            android:id="@+id/buttonPeople"
             android:layout_width="126dp"
-            android:layout_height="111dp"
-            app:srcCompat="@drawable/team"
-            app:layout_constraintLeft_toRightOf="@+id/imageSpeedWifi"
+            android:layout_height="126dp"
             android:layout_marginLeft="11dp"
+            android:layout_marginStart="13dp"
             android:layout_marginTop="59dp"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3"
-            android:layout_marginStart="13dp" />
+            android:background="@drawable/team"
+            android:onClick="sensorFactory"
+            app:layout_constraintLeft_toRightOf="@+id/buttonSpeedWifi"
+            app:layout_constraintTop_toBottomOf="@+id/buttonHumidity"
+            app:srcCompat="@drawable/team" />
 
-        <ImageView
-            android:id="@+id/imageSettings"
+        <Button
+            android:id="@+id/buttonSettings"
             android:layout_width="126dp"
-            android:layout_height="111dp"
-            android:layout_marginLeft="13dp"
+            android:layout_height="126dp"
+            android:layout_marginLeft="11dp"
             android:layout_marginStart="13dp"
             android:layout_marginTop="229dp"
-            app:layout_constraintLeft_toRightOf="@+id/imageSpeedWifi"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+            android:background="@drawable/settings"
+            app:layout_constraintLeft_toRightOf="@+id/buttonSpeedWifi"
+            app:layout_constraintTop_toBottomOf="@+id/buttonHumidity"
             app:srcCompat="@drawable/settings" />
+
+
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

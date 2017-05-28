@@ -25,7 +25,7 @@ public class Activity_PeopleRoom extends AppCompatActivity {
 
     // URL to get contacts JSON
     private String TAG = MainActivity.class.getSimpleName();
-    private static String baseUrl = "http://192.168.201.100:8080/sendPeople/";
+    private static String baseUrl = "http://192.168.43.193:8080/sendPeople/";
     private static String url;
     private ProgressDialog pDialog;
     private int people;
@@ -49,7 +49,7 @@ public class Activity_PeopleRoom extends AppCompatActivity {
                 Log.e(TAG, "URL: " + url);
 
 
-                // new GetData().execute(); // Quando servidor esta a funcionar
+                 new GetData().execute(); // Quando servidor esta a funcionar
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }
         });
@@ -60,6 +60,7 @@ public class Activity_PeopleRoom extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivityForResult(myIntent, 0);
+       // startActivity(new Intent(getApplicationContext(),MainActivity.class));
         return true;
 
     }

@@ -7,39 +7,27 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.icu.text.DecimalFormat;
-import android.media.Image;
 import android.media.MediaRecorder;
-import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -47,16 +35,22 @@ public class MainActivity extends AppCompatActivity {
 
     private ProgressDialog pDialog;
     private ListView lv;
-    private String ArduinoBright = "Very bright";
-    private double ArduinoTemperature = 51.15;
-    private double humidity= 39.551124572753906;
-    private double pressure = 1002.260498046875;
+    private String ArduinoBright = "Bright";
+    private double ArduinoTemperature = 35;
+    private double humidity= 2.551124572753906;
+    private double pressure = 102.260498046875;
     private String temperature;
     private Context context;
     private int people = 15;
     private int speedWifi;
-    private double noise = 1;
-
+    private double noise = 7;
+    private String backgroundTemperature;
+    private String backgroundBrightnes;
+    private String backgroundSpeedWifi;
+    private String backgroundNoise;
+    private String backgroundPeople;
+    private String backgroundHumidity;
+    private String backgroundPressur;
 
 
     private MediaRecorder recorder;
@@ -66,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private double amplitudeDbF;
     private volatile Thread verifyNoise;
     // URL to get contacts JSON
-    private static String url = "http://192.168.201.100:8080/all";
+    private static String url = "http://192.168.43.193:8080/all";
 
 
 
@@ -86,11 +80,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-       /* WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+        /*WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         int numberOfLevels = 5;
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+
         int level = WifiManager.calculateSignalLevel(wifiInfo.getRssi(), numberOfLevels);
         Log.e(TAG, "Wifi: " + level);*/
+
 
        /* GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new ImageAdapter(this));
@@ -107,12 +103,24 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 startActivity(new Intent(getApplicationContext(),Activity_PeopleRoom.class));
 
             }
         });
-        update();
-        //  new GetData().execute();
+
+
+        Button buttonSettings = (Button) findViewById(R.id.buttonSettings);
+        buttonSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),MainActivityChart.class));
+
+            }
+        });
+
+
+          //new GetData().execute();
 
         recorder = new MediaRecorder();
 
@@ -131,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
         verifyNoiseThread();
 
+        update();
 
 
     }
@@ -187,12 +196,14 @@ public class MainActivity extends AppCompatActivity {
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
-                    //people =  jsonObj.getString("people");
+                    people =  jsonObj.getInt("People");
                     ArduinoBright = jsonObj.getString("ArduinoBright");
                     ArduinoTemperature =  jsonObj.getDouble("ArduinoTemperature");
-                    humidity =  jsonObj.getDouble("humidity");
-                    pressure =  jsonObj.getDouble("pressure");
-                    temperature =  jsonObj.getString("temperature");
+                    humidity =  jsonObj.getDouble("Humidity");
+                    pressure =  jsonObj.getDouble("Pressure");
+                    temperature =  jsonObj.getString("Temperature");
+                    noise =  jsonObj.getDouble("Noise");
+                    speedWifi =  jsonObj.getInt("WifiQuality");
 
 
                     Log.e(TAG, "ArduinoBright: " + ArduinoBright);
@@ -270,9 +281,13 @@ public class MainActivity extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
                 }
+
             }
+
         });
+
         verifyNoise.start();
     }
 
@@ -287,79 +302,106 @@ public class MainActivity extends AppCompatActivity {
         TextView noiseOutput = (TextView) findViewById(R.id.textNoise);
         TextView peopleOutput = (TextView) findViewById(R.id.textPeople);
 
-       ImageView imageBrightness = (ImageView) findViewById(R.id.imageBrightness);
-        ImageView imageThermometer = (ImageView) findViewById(R.id.imageThermometer);
-        ImageView imageSpeedWifi = (ImageView) findViewById(R.id.imageSpeedWifi);
-        ImageView imageNoise = (ImageView) findViewById(R.id.imageNoise);
-        ImageView imagePeople = (ImageView) findViewById(R.id.imagePeople);
+        Button buttonBrightness = (Button) findViewById(R.id.buttonBrightness);
+        Button buttonThermometer = (Button) findViewById(R.id.buttonThermometer);
+        Button buttonSpeedWifi = (Button) findViewById(R.id.buttonSpeedWifi);
+        Button buttonNoise = (Button) findViewById(R.id.buttonNoise);
+        Button buttonPeople = (Button) findViewById(R.id.buttonPeople);
+        Button buttonPressur = (Button) findViewById(R.id.buttonPressur);
+        Button buttonHumidity = (Button) findViewById(R.id.buttonHumidity);
 
 
         switch (ArduinoBright){
             case "Dark":
-                imageBrightness.setImageResource(R.drawable.brightness_dark);
+                buttonBrightness.setBackgroundResource(R.drawable.brightness_dark);
+                backgroundBrightnes = "brightness_dark";
                 break;
             case "Dim":
-                imageBrightness.setImageResource(R.drawable.brightness_dim);
+                buttonBrightness.setBackgroundResource(R.drawable.brightness_dim);
+                backgroundBrightnes = "brightness_dim";
                 break;
             case "Light":
-                imageBrightness.setImageResource(R.drawable.brightness_light);
+                buttonBrightness.setBackgroundResource(R.drawable.brightness_light);
+                backgroundBrightnes = "brightness_light";
                 break;
             case "Bright":
-                imageBrightness.setImageResource(R.drawable.brightness_bright);
+                buttonBrightness.setBackgroundResource(R.drawable.brightness_bright);
+                backgroundBrightnes = "brightness_bright";
                 break;
             case "Very bright":
-                imageBrightness.setImageResource(R.drawable.brightness_verybright);
+                buttonBrightness.setBackgroundResource(R.drawable.brightness_verybright);
+                backgroundBrightnes = "brightness_verybright";
                 break;
         }
 
-        if (ArduinoTemperature <10){
 
-            imageSpeedWifi.setImageResource(R.drawable.thermometer_1_10);
+        if (ArduinoTemperature <10){
+            buttonThermometer.setBackgroundResource(R.drawable.thermometer_1_10);
+            backgroundTemperature = "thermometer_1_10";
         }else if (ArduinoTemperature >9 && ArduinoTemperature <16){
-            imageThermometer.setImageResource(R.drawable.thermometer_10_15);
+            buttonThermometer.setBackgroundResource(R.drawable.thermometer_10_15);
+            backgroundTemperature = "thermometer_10_15";
         }else if (ArduinoTemperature >15 && ArduinoTemperature <21){
-            imageThermometer.setImageResource(R.drawable.thermometer_15_20);
+            buttonThermometer.setBackgroundResource(R.drawable.thermometer_15_20);
+            backgroundTemperature = "thermometer_15_20";
         }else if (ArduinoTemperature >20 && ArduinoTemperature <26){
-            imageThermometer.setImageResource(R.drawable.thermometer_20_25);
+            buttonThermometer.setBackgroundResource(R.drawable.thermometer_20_25);
+            backgroundTemperature = "thermometer_20_25";
         }else if (ArduinoTemperature >25 && ArduinoTemperature <31){
-            imageThermometer.setImageResource(R.drawable.thermometer_25_30);
+            buttonThermometer.setBackgroundResource(R.drawable.thermometer_25_30);
+            backgroundTemperature = "thermometer_25_30";
         }else if (ArduinoTemperature >30 && ArduinoTemperature <36){
-            imageThermometer.setImageResource(R.drawable.thermometer_30_35);
+            buttonThermometer.setBackgroundResource(R.drawable.thermometer_30_35);
+            backgroundTemperature = "thermometer_30_35";
         }else if (ArduinoTemperature >35 && ArduinoTemperature <41){
-            imageThermometer.setImageResource(R.drawable.thermometer_35_40);
+            buttonThermometer.setBackgroundResource(R.drawable.thermometer_35_40);
+            backgroundTemperature = "thermometer_35_40";
         }else if (ArduinoTemperature >40 && ArduinoTemperature <46){
-            imageThermometer.setImageResource(R.drawable.thermometer_40_45);
+            buttonThermometer.setBackgroundResource(R.drawable.thermometer_40_45);
+            backgroundTemperature = "thermometer_40_45";
         }else if (ArduinoTemperature >45 && ArduinoTemperature <51){
-            imageThermometer.setImageResource(R.drawable.thermometer_45_50);
+            buttonThermometer.setBackgroundResource(R.drawable.thermometer_45_50);
+            backgroundTemperature = "thermometer_45_50";
         }else if (ArduinoTemperature >50){
-            imageThermometer.setImageResource(R.drawable.thermometer_50_55);
+            buttonThermometer.setBackgroundResource(R.drawable.thermometer_50_55);
+            backgroundTemperature = "thermometer_50_55";
         }
 
         if (speedWifi <2){
-            imageSpeedWifi.setImageResource(R.drawable.wifi_red);
+            buttonSpeedWifi.setBackgroundResource(R.drawable.wifi_red);
+            backgroundSpeedWifi = "wifi_red";
         }else if (speedWifi >2 && speedWifi <11){
-            imageSpeedWifi.setImageResource(R.drawable.wifi_orange);
+            buttonSpeedWifi.setBackgroundResource(R.drawable.wifi_orange);
+            backgroundSpeedWifi = "wifi_orange";
         }else if (speedWifi >10 && speedWifi <21){
-            imageSpeedWifi.setImageResource(R.drawable.wifi_yellow);
+            buttonSpeedWifi.setBackgroundResource(R.drawable.wifi_yellow);
+            backgroundSpeedWifi = "wifi_yellow";
         }else if (speedWifi >20){
-            imageSpeedWifi.setImageResource(R.drawable.wifi_green2);
+            buttonSpeedWifi.setBackgroundResource(R.drawable.wifi_green2);
+            backgroundSpeedWifi = "wifi_green2";
         }
 
 
         if (noise <3){
-            imageNoise.setImageResource(R.drawable.noise_green);
+            buttonNoise.setBackgroundResource(R.drawable.noise_green);
+            backgroundNoise = "noise_green";
         }else if (noise >2 && noise <11){
-            imageNoise.setImageResource(R.drawable.noise_orange);
+            buttonNoise.setBackgroundResource(R.drawable.noise_orange);
+            backgroundNoise = "noise_orange";
         }else if (noise >10 ){
-            imageNoise.setImageResource(R.drawable.noise_red);
+            buttonNoise.setBackgroundResource(R.drawable.noise_red);
+            backgroundNoise = "noise_red";
         }
 
         if (people <2){
-            imagePeople.setImageResource(R.drawable.people_green);
-        }else if (people >2 && people <11){
-            imagePeople.setImageResource(R.drawable.people_yellow);
+            buttonPeople.setBackgroundResource(R.drawable.people_green);
+            backgroundPeople = "people_green";
+        }else if (people >=2 && people <11){
+            buttonPeople.setBackgroundResource(R.drawable.people_yellow);
+            backgroundPeople = "people_yellow";
         }else if (people >10 ){
-            imagePeople.setImageResource(R.drawable.team);
+            buttonPeople.setBackgroundResource(R.drawable.team);
+            backgroundPeople = "team";
         }
 
 
@@ -368,6 +410,8 @@ public class MainActivity extends AppCompatActivity {
         int pressureInt = (int) pressure;
 
 
+        backgroundPressur = "pressure";
+        backgroundHumidity = "airhumidity";
 
         brightOutput.setText(ArduinoBright);
         temperatureOutput.setText((ArduinoTemperature+" ºc"));
@@ -380,6 +424,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+public void sensorFactory(View view){
+    switch (view.getId()) {
+        case R.id.buttonThermometer:
+            startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Temperature").putExtra("background",  backgroundTemperature).putExtra("value", ArduinoTemperature+" ºc"));
+            break;
+        case R.id.buttonBrightness:
+            startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Brightnes").putExtra("background",  backgroundBrightnes).putExtra("value", ArduinoBright));
+            break;
+        case R.id.buttonSpeedWifi:
+            startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "SpeedWifi").putExtra("background",  backgroundSpeedWifi).putExtra("value", (Integer.toString(speedWifi)+" mbps")));
+            break;
+        case R.id.buttonNoise:
+            noise = Math.round(noise);
+            startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Noise").putExtra("background",  backgroundNoise).putExtra("value", noise+" db"));
+            break;
+        case R.id.buttonPeople:
+            startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "People").putExtra("background",  backgroundPeople).putExtra("value", people+" un"));
+            break;
+        case R.id.buttonHumidity:
+            startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Humidity").putExtra("background",  backgroundHumidity).putExtra("value", (humidity+" %")));
+            break;
+        case R.id.buttonPressur:
+            int pressureInt = (int) pressure;
+            startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Pressur").putExtra("background",  backgroundPressur).putExtra("value", (pressureInt+" br")));
+            break;
+    }
+
+
+}
 
 
 
