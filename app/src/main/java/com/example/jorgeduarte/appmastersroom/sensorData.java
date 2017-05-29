@@ -452,7 +452,8 @@ public class sensorData extends AppCompatActivity {
                 textView2.setText("Date                                    Value");
 
 
-
+            if(getArguments().getDoubleArray("Temperature")[0] > 0 )
+            {
 
 
                 switch (sensor) {
@@ -541,7 +542,7 @@ public class sensorData extends AppCompatActivity {
                 listView = (ListView) rootView.findViewById(R.id.dataList);
                 listView.setAdapter(adapter);
                 listView.addHeaderView(textView2);
-
+            }
                 String nameBackground = bundle.getString("nameBackground");
 
                 ImageView imageSensor = (ImageView) rootView.findViewById(R.id.imageSensor);
@@ -555,7 +556,7 @@ public class sensorData extends AppCompatActivity {
 
 
                 return rootView;
-            }else {
+            }else if (type == 1){
                 View rootView = inflater.inflate(R.layout.fragment_sensor_chart, container, false);
                 TextView textView = (TextView) rootView.findViewById(R.id.textValue);
 
@@ -565,59 +566,56 @@ public class sensorData extends AppCompatActivity {
 
                 ArrayList<BarEntry> group1 = new ArrayList<>();
 
-                if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                    double values[] =  getArguments().getDoubleArray(sensor);
+                if(getArguments().getDoubleArray("Temperature")[0] > 0) {
 
-                    for(int i=0; i<=6; i++){
+                    if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
+                        double values[] = getArguments().getDoubleArray(sensor);
 
-                        if(values[i] >= 0) {
-                            group1.add(new BarEntry((float) values[i], i));
+                        for (int i = 0; i <= 6; i++) {
+
+                            if (values[i] >= 0) {
+                                group1.add(new BarEntry((float) values[i], i));
+                            }
+
                         }
 
+                    } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
+
+                        double values[] = getArguments().getDoubleArray(sensor);
+                        for (int i = 0; i <= 2; i++) {
+
+                            if (values[i] >= 0) {
+                                group1.add(new BarEntry((float) values[i], i));
+                            }
+
+                        }
+                    } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 3) {
+                        double values[] = getArguments().getDoubleArray(sensor);
+                        for (int i = 0; i <= 2; i++) {
+
+                            if (values[i] >= 0) {
+                                group1.add(new BarEntry((float) values[i], i));
+                            }
+
+                        }
                     }
 
+
+                    BarDataSet barDataSet1 = new BarDataSet(group1, "Group 1");
+                    //barDataSet1.setColor(Color.rgb(0, 155, 0));
+                    barDataSet1.setColors(ColorTemplate.COLORFUL_COLORS);
+
+
+                    ArrayList<BarDataSet> dataSets = new ArrayList<>();
+                    dataSets.add(barDataSet1);
+
+
+                    BarData data = new BarData(getXAxisValues(), dataSets);
+                    barChart.setData(data);
+                    //   barChart.setDescription("My Grouped Bar Chart");
+                    barChart.animateXY(2000, 2000);
+                    barChart.invalidate();
                 }
-                else if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-
-                    double values[] =  getArguments().getDoubleArray(sensor);
-                    for(int i=0; i<=2; i++){
-
-                        if(values[i] >= 0) {
-                            group1.add(new BarEntry((float) values[i], i));
-                        }
-
-                    }
-                }else if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                    double values[] =  getArguments().getDoubleArray(sensor);
-                    for(int i=0; i<=2; i++){
-
-                        if(values[i] >= 0) {
-                            group1.add(new BarEntry((float) values[i], i));
-                        }
-
-                    }
-                }
-
-
-
-
-                BarDataSet barDataSet1 = new BarDataSet(group1, "Group 1");
-                //barDataSet1.setColor(Color.rgb(0, 155, 0));
-                barDataSet1.setColors(ColorTemplate.COLORFUL_COLORS);
-
-
-
-                ArrayList<BarDataSet> dataSets = new ArrayList<>();
-                dataSets.add(barDataSet1);
-
-
-
-                BarData data = new BarData(getXAxisValues(), dataSets);
-                barChart.setData(data);
-                //   barChart.setDescription("My Grouped Bar Chart");
-                barChart.animateXY(2000, 2000);
-                barChart.invalidate();
-
                 String nameBackground = bundle.getString("nameBackground");
 
                 ImageView imageSensor = (ImageView) rootView.findViewById(R.id.imageSensor);
@@ -629,6 +627,10 @@ public class sensorData extends AppCompatActivity {
 
                 return rootView;
 
+            }
+            else {
+                View rootView = inflater.inflate(R.layout.fragment_sensor_data, container, false);
+                return rootView;
             }
         }
 
