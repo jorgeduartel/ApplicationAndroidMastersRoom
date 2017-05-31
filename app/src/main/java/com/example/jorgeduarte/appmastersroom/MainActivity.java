@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private double amplitudeDbF;
     private volatile Thread verifyNoise;
     // URL to get contacts JSON
-    private static String url = "http://192.168.43.193:8080/all";
+    private static String url = com.example.jorgeduarte.appmastersroom.url.getUrl()+"all";
 
 
 

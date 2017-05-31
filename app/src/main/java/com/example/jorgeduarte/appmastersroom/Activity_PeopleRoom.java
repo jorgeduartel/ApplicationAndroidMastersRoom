@@ -25,7 +25,7 @@ public class Activity_PeopleRoom extends AppCompatActivity {
 
     // URL to get contacts JSON
     private String TAG = MainActivity.class.getSimpleName();
-    private static String baseUrl = "http://192.168.43.193:8080/sendPeople/";
+    private static String baseUrl = com.example.jorgeduarte.appmastersroom.url.getUrl()+"sendPeople/";
     private static String url;
     private ProgressDialog pDialog;
     private int people;

@@ -47,6 +47,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static android.R.attr.x;
@@ -70,16 +71,17 @@ public class sensorData extends AppCompatActivity {
     //private ArrayList <Double> temperature;
     private ArrayList <String> brightness2 =  new ArrayList();
     private ArrayList <String> date =  new ArrayList();
-    private double humidity[] =  new double[7];
-    private double temperature[] =  new double[7];
-    private double pressure[] =  new double[7];
-    private double people[] =  new double[7];
-    private double noise[] =  new double[7];
-    private double wifiSpeed[] =  new double[7];
+    private double humidity[] =  new double[20];
+    private double temperature[] =  new double[20];
+    private double pressure[] =  new double[20];
+    private double people[] =  new double[20];
+    private double noise[] =  new double[20];
+    private double wifiSpeed[] =  new double[20];
 
 
 
-    private static String url = "http://192.168.43.193:8080/getDate/";
+    private static String url = com.example.jorgeduarte.appmastersroom.url.getUrl()+"getDate/";
+    private static String url2= com.example.jorgeduarte.appmastersroom.url.getUrl()+"getday/3";
     private String TAG = sensorData.class.getSimpleName();
     private ProgressDialog pDialog;
 
@@ -94,7 +96,7 @@ public class sensorData extends AppCompatActivity {
         nameBackground = bundle.getString("background");
         value =  bundle.getString("value");
 
-       // new GetData().execute();
+        new GetData().execute();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -246,6 +248,8 @@ public class sensorData extends AppCompatActivity {
             String jsonStr5 = sh.makeServiceCall(url+"5" , "GET");
             String jsonStr6 = sh.makeServiceCall(url+"6" , "GET");
 
+            String jsonStr7 = sh.makeServiceCall(url2 , "GET");
+
             Log.e(TAG, "Response from url: " + jsonStr);
 
             if (jsonStr != null && jsonStr1 != null && jsonStr2 != null) {
@@ -257,7 +261,11 @@ public class sensorData extends AppCompatActivity {
                     JSONObject jsonObj4 = new JSONObject(jsonStr4);
                     JSONObject jsonObj5 = new JSONObject(jsonStr5);
                     JSONObject jsonObj6 = new JSONObject(jsonStr6);
+                    JSONObject jsonObj7 = new JSONObject(jsonStr7);
+
                     //people =  jsonObj.getString("people");
+
+
 
                     date.add(0, jsonObj.getString("date1"));
                     date.add(1, jsonObj1.getString("date1"));
@@ -325,6 +333,12 @@ public class sensorData extends AppCompatActivity {
                     wifiSpeed[4] = jsonObj4.getDouble("wifiAverage");
                     wifiSpeed[5] = jsonObj5.getDouble("wifiAverage");
                     wifiSpeed[6] = jsonObj6.getDouble("wifiAverage");
+
+                    for(int i = 8; i<20; i++){
+
+                        humidity[i] = jsonObj7.getDouble("humidity");
+                        temperature[i] = jsonObj7.getDouble("rpTemperature");
+                    }
 
 
                 } catch (final JSONException e) {

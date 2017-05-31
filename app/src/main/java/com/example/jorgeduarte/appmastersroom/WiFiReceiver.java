@@ -3,23 +3,41 @@ package com.example.jorgeduarte.appmastersroom;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaRecorder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 /**
  * Created by jorgeduarte on 06/05/17.
  */
 
 class WifiReceiver extends BroadcastReceiver {
 
+    private double amplitudeDb;
+    private double amplitudeDbF;
+    private MediaRecorder recorder;
+    private double noise = -9999;
+    private int speed  = -9999;
+    private ProgressDialog pDialog;
+    private volatile Thread verifyNoise;
+    private static String url = com.example.jorgeduarte.appmastersroom.url.getUrl();
 
 
     @Override
@@ -29,18 +47,72 @@ class WifiReceiver extends BroadcastReceiver {
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         String name = wifiInfo.getSSID();
         int rssi = wifiInfo.getRssi();
-        int speed = wifiInfo.getLinkSpeed();
-
-        if (name.contains("e-MEI")){
 
 
-            Log.d("WifiReceiver", "Don't have Wifi Connection"+name+"  speed"+speed);
+        if (name.contains("WiredSSID")) {
+
+            speed = wifiInfo.getLinkSpeed();
+            Log.d("WifiReceiver", "Don't have Wifi Connection" + name + "  speed" + speed);
 
             checkSpeedWifi(context);
             sendNotification(context);
+            start();
+            new GetData().execute();
+            noise = getAmplitude();
 
         }
+    }
 
+    public void start() {
+        if (recorder == null) {
+            recorder = new MediaRecorder();
+            recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            recorder.setOutputFile("/dev/null");
+            try {
+                recorder.prepare();
+                recorder.start();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    public void stop() {
+        if (recorder != null) {
+            recorder.stop();
+            recorder.release();
+            recorder = null;
+        }
+    }
+
+
+    public double getAmplitude() {
+        if (recorder != null) {
+            int i = 0;
+            int amplitude = recorder.getMaxAmplitude();
+            amplitudeDb = 20 * Math.log10((double) Math.abs(amplitude));
+            while(amplitudeDb<0 || i <40){
+                amplitude = recorder.getMaxAmplitude();
+                amplitudeDb = 20 * Math.log10((double) Math.abs(amplitude));
+                i++;
+            }
+            if(amplitudeDb>=0) {
+                amplitudeDbF =  amplitudeDb;
+                noise = amplitudeDb;
+                return (recorder.getMaxAmplitude() / 2700.0);
+            }else {
+                return -9999;
+            }
+
+
+        }
+        else
+            return 0;
     }
 
     public void sendNotification(Context context){
@@ -68,6 +140,62 @@ class WifiReceiver extends BroadcastReceiver {
         int speed = wifiInfo.getLinkSpeed();
 
         Log.d("WifiReceiver", "Wifi Connection  "+rssi+ "  speed"+speed);
+    }
+
+
+    /**
+     * Async task class to get json by making HTTP call
+     */
+    private class GetData extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            HttpHandler sh = new HttpHandler();
+
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall((url+"sendNoise/"+(int)noise) , "POST");
+            String jsonStr2 = sh.makeServiceCall((url+"sendPeople/"+(int)speed) , "POST");
+
+
+            Log.d("WifiReceiver", (url+"sendNoise/"+noise));
+
+            if (jsonStr != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+
+
+                } catch (final JSONException e) {
+
+
+
+                }
+            } else {
+
+
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            // Showing progress dialog
+
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+
+            /**
+             * Updating parsed JSON data into ListView
+             * */
+
+        }
+
+
     }
 
 };
