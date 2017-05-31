@@ -1,6 +1,5 @@
 package com.example.jorgeduarte.appmastersroom;
 
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -29,10 +28,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-
 public class MainActivity extends AppCompatActivity {
-    private String TAG = MainActivity.class.getSimpleName();
 
+    private String TAG = MainActivity.class.getSimpleName();
     private ProgressDialog pDialog;
     private ListView lv;
     private String ArduinoBright = "Bright";
@@ -52,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private String backgroundHumidity;
     private String backgroundPressur;
 
-
     private MediaRecorder recorder;
 
     private TextView tvNoiseOutput;
@@ -63,13 +60,10 @@ public class MainActivity extends AppCompatActivity {
     private static String url = com.example.jorgeduarte.appmastersroom.url.getUrl()+"all";
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
         if (android.os.Build.VERSION.SDK_INT >= 21) { // Jorge
             Window window = this.getWindow();
@@ -77,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(this.getResources().getColor(R.color.gray));
         }
-
-
 
         /*WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         int numberOfLevels = 5;
@@ -146,30 +138,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void getnotification(){
 
-
-
-
        NotificationManager notificationmgr = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         Intent intent = new Intent(this, Activity_PeopleRoom.class);
         PendingIntent pintent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
 
         //   PendingIntent pintent = PendingIntent.getActivities(this,(int)System.currentTimeMillis(),intent, 0);
 
-
         Notification notif = new Notification.Builder(this)
                 .setSmallIcon(R.drawable.team)
-                .setContentTitle("Masters Room")
+                .setContentTitle("Study Room")
                 .setContentText("Please count the number of people in the room ")
                 .setContentIntent(pintent)
                 .build();
 
 
         notificationmgr.notify(0,notif);
-
-
-
-
-
     }
 
     public void onReceive(WifiManager wifiManager) {
@@ -234,7 +217,6 @@ public class MainActivity extends AppCompatActivity {
                                 .show();
                     }
                 });
-
             }
 
             return null;
@@ -259,10 +241,7 @@ public class MainActivity extends AppCompatActivity {
             /**
              * Updating parsed JSON data into ListView
              * */
-
         }
-
-
     }
 
     public void verifyNoiseThread(){
@@ -281,16 +260,13 @@ public class MainActivity extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-
                 }
-
             }
 
         });
 
         verifyNoise.start();
     }
-
 
 
     public void update(){
@@ -309,7 +285,6 @@ public class MainActivity extends AppCompatActivity {
         Button buttonPeople = (Button) findViewById(R.id.buttonPeople);
         Button buttonPressur = (Button) findViewById(R.id.buttonPressur);
         Button buttonHumidity = (Button) findViewById(R.id.buttonHumidity);
-
 
         switch (ArduinoBright){
             case "Dark":
@@ -333,7 +308,6 @@ public class MainActivity extends AppCompatActivity {
                 backgroundBrightnes = "brightness_verybright";
                 break;
         }
-
 
         if (ArduinoTemperature <10){
             buttonThermometer.setBackgroundResource(R.drawable.thermometer_1_10);
@@ -381,7 +355,6 @@ public class MainActivity extends AppCompatActivity {
             backgroundSpeedWifi = "wifi_green2";
         }
 
-
         if (noise <3){
             buttonNoise.setBackgroundResource(R.drawable.noise_green);
             backgroundNoise = "noise_green";
@@ -404,11 +377,9 @@ public class MainActivity extends AppCompatActivity {
             backgroundPeople = "team";
         }
 
-
         ArduinoTemperature = Math.round(ArduinoTemperature);
         humidity = Math.round(humidity);
         int pressureInt = (int) pressure;
-
 
         backgroundPressur = "pressure";
         backgroundHumidity = "airhumidity";
@@ -423,39 +394,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-public void sensorFactory(View view){
-    switch (view.getId()) {
-        case R.id.buttonThermometer:
-            startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Temperature").putExtra("background",  backgroundTemperature).putExtra("value", ArduinoTemperature+" ºc"));
-            break;
-        case R.id.buttonBrightness:
-            startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Brightnes").putExtra("background",  backgroundBrightnes).putExtra("value", ArduinoBright));
-            break;
-        case R.id.buttonSpeedWifi:
-            startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "SpeedWifi").putExtra("background",  backgroundSpeedWifi).putExtra("value", (Integer.toString(speedWifi)+" mbps")));
-            break;
-        case R.id.buttonNoise:
-            noise = Math.round(noise);
-            startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Noise").putExtra("background",  backgroundNoise).putExtra("value", noise+" db"));
-            break;
-        case R.id.buttonPeople:
-            startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "People").putExtra("background",  backgroundPeople).putExtra("value", people+" un"));
-            break;
-        case R.id.buttonHumidity:
-            startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Humidity").putExtra("background",  backgroundHumidity).putExtra("value", (humidity+" %")));
-            break;
-        case R.id.buttonPressur:
-            int pressureInt = (int) pressure;
-            startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Pressur").putExtra("background",  backgroundPressur).putExtra("value", (pressureInt+" br")));
-            break;
+    public void sensorFactory(View view){
+        switch (view.getId()) {
+            case R.id.buttonThermometer:
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Temperature").putExtra("background",  backgroundTemperature).putExtra("value", ArduinoTemperature+" ºc"));
+                break;
+            case R.id.buttonBrightness:
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Brightness").putExtra("background",  backgroundBrightnes).putExtra("value", ArduinoBright));
+                break;
+            case R.id.buttonSpeedWifi:
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Wi-Fi network speed").putExtra("background",  backgroundSpeedWifi).putExtra("value", (Integer.toString(speedWifi)+" mbps")));
+                break;
+            case R.id.buttonNoise:
+                noise = Math.round(noise);
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Noise").putExtra("background",  backgroundNoise).putExtra("value", noise+" db"));
+                break;
+            case R.id.buttonPeople:
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Number of people").putExtra("background",  backgroundPeople).putExtra("value", people+" un"));
+                break;
+            case R.id.buttonHumidity:
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Humidity").putExtra("background",  backgroundHumidity).putExtra("value", (humidity+" %")));
+                break;
+            case R.id.buttonPressur:
+                int pressureInt = (int) pressure;
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Pressure").putExtra("background",  backgroundPressur).putExtra("value", (pressureInt+" br")));
+                break;
+        }
     }
-
-
 }
-
-
-
-}
-
-

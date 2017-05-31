@@ -48,18 +48,16 @@ class WifiReceiver extends BroadcastReceiver {
         String name = wifiInfo.getSSID();
         int rssi = wifiInfo.getRssi();
 
-
-        if (name.contains("WiredSSID")) {
+        if (name.contains("e-MEI")) {
 
             speed = wifiInfo.getLinkSpeed();
-            Log.d("WifiReceiver", "Don't have Wifi Connection" + name + "  speed" + speed);
+            Log.d("WifiReceiver", "Don't have Wi-Fi connection" + name + "  speed" + speed);
 
             checkSpeedWifi(context);
             sendNotification(context);
             start();
             new GetData().execute();
             noise = getAmplitude();
-
         }
     }
 
@@ -90,7 +88,6 @@ class WifiReceiver extends BroadcastReceiver {
         }
     }
 
-
     public double getAmplitude() {
         if (recorder != null) {
             int i = 0;
@@ -108,8 +105,6 @@ class WifiReceiver extends BroadcastReceiver {
             }else {
                 return -9999;
             }
-
-
         }
         else
             return 0;
@@ -123,8 +118,8 @@ class WifiReceiver extends BroadcastReceiver {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.team)
-                        .setContentTitle("Masters Room")
-                        .setContentText("Please count the number of people in the room")
+                        .setContentTitle("Study Room")
+                        .setContentText("Please, count the number of people in the room.")
                         .setContentIntent(pintent);
 
 
@@ -139,9 +134,8 @@ class WifiReceiver extends BroadcastReceiver {
         int rssi = wifiInfo.getRssi();
         int speed = wifiInfo.getLinkSpeed();
 
-        Log.d("WifiReceiver", "Wifi Connection  "+rssi+ "  speed"+speed);
+        Log.d("WifiReceiver", "Wi-Fi connection  "+rssi+ "  speed"+speed);
     }
-
 
     /**
      * Async task class to get json by making HTTP call
@@ -154,7 +148,7 @@ class WifiReceiver extends BroadcastReceiver {
 
             // Making a request to url and getting response
             String jsonStr = sh.makeServiceCall((url+"sendNoise/"+(int)noise) , "POST");
-            String jsonStr2 = sh.makeServiceCall((url+"sendPeople/"+(int)speed) , "POST");
+            String jsonStr2 = sh.makeServiceCall((url+"sendWifiQuality/"+(int)speed) , "POST");
 
 
             Log.d("WifiReceiver", (url+"sendNoise/"+noise));
@@ -165,8 +159,6 @@ class WifiReceiver extends BroadcastReceiver {
 
 
                 } catch (final JSONException e) {
-
-
 
                 }
             } else {
@@ -182,8 +174,8 @@ class WifiReceiver extends BroadcastReceiver {
             super.onPreExecute();
 
             // Showing progress dialog
-
         }
+
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
@@ -192,10 +184,6 @@ class WifiReceiver extends BroadcastReceiver {
             /**
              * Updating parsed JSON data into ListView
              * */
-
         }
-
-
     }
-
-};
+}

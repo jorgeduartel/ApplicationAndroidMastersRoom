@@ -48,13 +48,10 @@ public class Activity_PeopleRoom extends AppCompatActivity {
                 url = baseUrl+fab.getText().toString();
                 Log.e(TAG, "URL: " + url);
 
-
                  new GetData().execute(); // Quando servidor esta a funcionar
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }
         });
-
-
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
@@ -62,7 +59,6 @@ public class Activity_PeopleRoom extends AppCompatActivity {
         startActivityForResult(myIntent, 0);
        // startActivity(new Intent(getApplicationContext(),MainActivity.class));
         return true;
-
     }
 
     /**
@@ -100,7 +96,6 @@ public class Activity_PeopleRoom extends AppCompatActivity {
                                     .show();
                         }
                     });
-
                 }
             } else {
                 Log.e(TAG, "Couldn't get json from server.");
@@ -113,7 +108,6 @@ public class Activity_PeopleRoom extends AppCompatActivity {
                                 .show();
                     }
                 });
-
             }
 
             return null;
@@ -127,7 +121,6 @@ public class Activity_PeopleRoom extends AppCompatActivity {
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
-
         }
 
         @Override
@@ -139,12 +132,6 @@ public class Activity_PeopleRoom extends AppCompatActivity {
             /**
              * Updating parsed JSON data into ListView
              * */
-
         }
-
     }
-
-
-
 }
-

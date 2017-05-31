@@ -70,7 +70,7 @@
             android:layout_alignBottom="@+id/imageView7"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="28dp"
-            android:text="Contar o numero de pessoas na sala e enviar"
+            android:text="Please, count the number of people in the room."
             android:textColor="@color/White" />
 
     </RelativeLayout>

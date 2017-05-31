@@ -28,17 +28,12 @@ public class MainActivityChart extends AppCompatActivity {
         group1.add(new BarEntry(18f, 4));
         group1.add(new BarEntry(9f, 5));
 
-
         BarDataSet barDataSet1 = new BarDataSet(group1, "Group 1");
         //barDataSet1.setColor(Color.rgb(0, 155, 0));
         barDataSet1.setColors(ColorTemplate.COLORFUL_COLORS);
 
-
-
         ArrayList<BarDataSet> dataSets = new ArrayList<>();
         dataSets.add(barDataSet1);
-
-
 
         BarData data = new BarData(getXAxisValues(), dataSets);
         barChart.setData(data);
@@ -46,7 +41,6 @@ public class MainActivityChart extends AppCompatActivity {
         barChart.animateXY(2000, 2000);
         barChart.invalidate();
     }
-
 
     private ArrayList<String> getXAxisValues() {
         ArrayList<String> labels = new ArrayList<>();

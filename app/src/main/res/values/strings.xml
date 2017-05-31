@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppMastersRoom</string>
+    <string name="app_name">Study Room Monitor</string>
     <string name="title_activity__people_room">Activity_PeopleRoom</string>
     <string name="title_activity_sensor_data">sensorData</string>
     <string name="action_settings">Settings</string>

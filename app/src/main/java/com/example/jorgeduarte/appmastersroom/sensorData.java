@@ -105,10 +105,6 @@ public class sensorData extends AppCompatActivity {
         type = 0;
 
 
-
-
-
-
         // Setup spinner
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setAdapter(new MyAdapter(
@@ -144,9 +140,6 @@ public class sensorData extends AppCompatActivity {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(this.getResources().getColor(R.color.gray));
         }
-
-
-
     }
 
 
@@ -229,7 +222,6 @@ public class sensorData extends AppCompatActivity {
     }
 
 
-
     /**
      * Async task class to get json by making HTTP call
      */
@@ -248,7 +240,7 @@ public class sensorData extends AppCompatActivity {
             String jsonStr5 = sh.makeServiceCall(url+"5" , "GET");
             String jsonStr6 = sh.makeServiceCall(url+"6" , "GET");
 
-            String jsonStr7 = sh.makeServiceCall(url2 , "GET");
+            //String jsonStr7 = sh.makeServiceCall(url2 , "GET");
 
             Log.e(TAG, "Response from url: " + jsonStr);
 
@@ -261,7 +253,7 @@ public class sensorData extends AppCompatActivity {
                     JSONObject jsonObj4 = new JSONObject(jsonStr4);
                     JSONObject jsonObj5 = new JSONObject(jsonStr5);
                     JSONObject jsonObj6 = new JSONObject(jsonStr6);
-                    JSONObject jsonObj7 = new JSONObject(jsonStr7);
+                    //JSONObject jsonObj7 = new JSONObject(jsonStr7);
 
                     //people =  jsonObj.getString("people");
 
@@ -334,12 +326,6 @@ public class sensorData extends AppCompatActivity {
                     wifiSpeed[5] = jsonObj5.getDouble("wifiAverage");
                     wifiSpeed[6] = jsonObj6.getDouble("wifiAverage");
 
-                    for(int i = 8; i<20; i++){
-
-                        humidity[i] = jsonObj7.getDouble("humidity");
-                        temperature[i] = jsonObj7.getDouble("rpTemperature");
-                    }
-
 
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -392,11 +378,7 @@ public class sensorData extends AppCompatActivity {
              * */
 
         }
-
-
     }
-
-
 
     /**
      * A placeholder fragment containing a simple view.
@@ -432,15 +414,12 @@ public class sensorData extends AppCompatActivity {
             args.putString("value", value);
             args.putDoubleArray("Humidity", humidity);
             args.putDoubleArray("Temperature", temperature);
-            args.putDoubleArray("Pressur", pressure);
-            args.putDoubleArray("People", people);
+            args.putDoubleArray("Pressure", pressure);
+            args.putDoubleArray("Number of people", people);
             args.putDoubleArray("Noise", noise);
-            args.putDoubleArray("SpeedWifi", wifiSpeed);
-
+            args.putDoubleArray("Wi-Fi network speed", wifiSpeed);
             args.putStringArrayList("date", date);
-            args.putStringArrayList("brightness", brightness);
-
-
+            args.putStringArrayList("Brightness", brightness);
 
             fragment.setArguments(args);
             return fragment;
@@ -453,7 +432,6 @@ public class sensorData extends AppCompatActivity {
             int type = bundle.getInt("type");
             String sensor = bundle.getString("sensor");
 
-
             if (type==0) {
                 View rootView = inflater.inflate(R.layout.fragment_sensor_data, container, false);
 
@@ -465,11 +443,8 @@ public class sensorData extends AppCompatActivity {
                 TextView textView2 = new TextView(getActivity().getApplicationContext());
                 textView2.setText("Date                                    Value");
 
-
             if(getArguments().getDoubleArray("Temperature")[0] > 0 )
             {
-
-
                 switch (sensor) {
                     case "Temperature":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
@@ -483,7 +458,7 @@ public class sensorData extends AppCompatActivity {
                         }
 
                         break;
-                    case "Brightnes":
+                    case "Brightness":
                         for (String value: getArguments().getStringArrayList(sensor)) {
                             for (String date: getArguments().getStringArrayList("date")) {
 
@@ -491,7 +466,7 @@ public class sensorData extends AppCompatActivity {
                             }
                         }
                         break;
-                    case "SpeedWifi":
+                    case "Wi-Fi network speed":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
                             getData(sensor, " mbps", 6);
                         }else
@@ -513,7 +488,7 @@ public class sensorData extends AppCompatActivity {
                             getData(sensor, " db", 0);
                         }
                         break;
-                    case "People":
+                    case "Number of people":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
                             getData(sensor, " un", 6);
                         }else
@@ -536,7 +511,7 @@ public class sensorData extends AppCompatActivity {
                             getData(sensor, " %", 0);
                         }
                         break;
-                    case "Pressur":
+                    case "Pressure":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
                             getData(sensor, " Br", 6);
                         }else
@@ -548,9 +523,6 @@ public class sensorData extends AppCompatActivity {
                         }
                         break;
                 }
-
-
-
 
                 adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, auxItens);
                 listView = (ListView) rootView.findViewById(R.id.dataList);
@@ -565,9 +537,6 @@ public class sensorData extends AppCompatActivity {
                 ImageView colorView = (ImageView) rootView.findViewById(R.id.colorView);
                 Drawable d = getDrawable(nameBackground);
                 imageSensor.setBackground(d);
-
-
-
 
                 return rootView;
             }else if (type == 1){
@@ -590,7 +559,6 @@ public class sensorData extends AppCompatActivity {
                             if (values[i] >= 0) {
                                 group1.add(new BarEntry((float) values[i], i));
                             }
-
                         }
 
                     } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
@@ -614,7 +582,6 @@ public class sensorData extends AppCompatActivity {
                         }
                     }
 
-
                     BarDataSet barDataSet1 = new BarDataSet(group1, "Group 1");
                     //barDataSet1.setColor(Color.rgb(0, 155, 0));
                     barDataSet1.setColors(ColorTemplate.COLORFUL_COLORS);
@@ -622,7 +589,6 @@ public class sensorData extends AppCompatActivity {
 
                     ArrayList<BarDataSet> dataSets = new ArrayList<>();
                     dataSets.add(barDataSet1);
-
 
                     BarData data = new BarData(getXAxisValues(), dataSets);
                     barChart.setData(data);
@@ -633,7 +599,6 @@ public class sensorData extends AppCompatActivity {
                 String nameBackground = bundle.getString("nameBackground");
 
                 ImageView imageSensor = (ImageView) rootView.findViewById(R.id.imageSensor);
-
 
                 ImageView colorView = (ImageView) rootView.findViewById(R.id.colorView);
                 Drawable d = getDrawable(nameBackground);
@@ -661,7 +626,7 @@ public class sensorData extends AppCompatActivity {
                 if(!Double.isNaN(values[i]) && date.get(i) != null){
 
                     if(values[i] < 0){
-                        auxItens.add("" + date.get(i) + "                        " + "Data unavailable");
+                        auxItens.add("" + date.get(i) + "                        " + "Unavailable data");
                     }else {
                         auxItens.add("" + date.get(i) + "                                    " + values[i] + unit);
                     }
@@ -669,7 +634,6 @@ public class sensorData extends AppCompatActivity {
             }
 
         }
-
 
         private ArrayList<String> getXAxisValues() {
             ArrayList<String> labels = new ArrayList<>();
@@ -693,9 +657,5 @@ public class sensorData extends AppCompatActivity {
             }
             return labels;
         }
-
-
     }
-
-
 }
