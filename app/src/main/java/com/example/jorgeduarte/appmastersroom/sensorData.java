@@ -454,24 +454,24 @@ public class sensorData extends AppCompatActivity {
                         }
                     case "Wi-Fi network speed":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " mbps", 6);
+                            getData(sensor, " Mb/s", 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " mbps", 2);
+                            getData(sensor, " Mb/s", 2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " mbps", 0);
+                            getData(sensor, " Mb/s", 0);
                         }
                         break;
                     case "Noise":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " db", 6);
+                            getData(sensor, " dB", 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " db", 2);
+                            getData(sensor, " dB", 2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " db", 0);
+                            getData(sensor, " dB", 0);
                         }
                         break;
                     case "Number of people":
@@ -499,13 +499,13 @@ public class sensorData extends AppCompatActivity {
                         break;
                     case "Pressure":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " Br", 6);
+                            getData(sensor, " hPa", 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " Br", 2);
+                            getData(sensor, " hPa", 2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " Br", 0);
+                            getData(sensor, " hPa", 0);
                         }
                         break;
                 }

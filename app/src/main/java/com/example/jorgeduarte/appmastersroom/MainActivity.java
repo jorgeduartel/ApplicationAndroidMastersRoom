@@ -404,29 +404,28 @@ public class MainActivity extends AppCompatActivity {
         backgroundHumidity = "airhumidity";
 
         brightOutput.setText(ArduinoBright);
-        temperatureOutput.setText((ArduinoTemperature+" ºc"));
+        temperatureOutput.setText((ArduinoTemperature+" ºC"));
         humidityOutput.setText((humidity+" %"));
-        pressureOutput.setText((pressureInt+" br"));
-        speedWifiOutput.setText((Integer.toString(speedWifi)+" mbps"));
-        noiseOutput.setText(noise+" db");
+        pressureOutput.setText((pressureInt+" hPa"));
+        speedWifiOutput.setText((Integer.toString(speedWifi)+" Mb/s"));
+        noiseOutput.setText(noise+" dB");
         peopleOutput.setText(people+" un");
-
     }
 
     public void sensorFactory(View view){
         switch (view.getId()) {
             case R.id.buttonThermometer:
-                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Temperature").putExtra("background",  backgroundTemperature).putExtra("value", ArduinoTemperature+" ºc"));
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Temperature").putExtra("background",  backgroundTemperature).putExtra("value", ArduinoTemperature+" ºC"));
                 break;
             case R.id.buttonBrightness:
                 startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Brightness").putExtra("background",  backgroundBrightnes).putExtra("value", ArduinoBright));
                 break;
             case R.id.buttonSpeedWifi:
-                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Wi-Fi network speed").putExtra("background",  backgroundSpeedWifi).putExtra("value", (Integer.toString(speedWifi)+" mbps")));
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Wi-Fi network speed").putExtra("background",  backgroundSpeedWifi).putExtra("value", (Integer.toString(speedWifi)+" Mb/s")));
                 break;
             case R.id.buttonNoise:
                 noise = Math.round(noise);
-                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Noise").putExtra("background",  backgroundNoise).putExtra("value", noise+" db"));
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Noise").putExtra("background",  backgroundNoise).putExtra("value", noise+" dB"));
                 break;
             case R.id.buttonPeople:
                 startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Number of people").putExtra("background",  backgroundPeople).putExtra("value", people+" un"));
@@ -436,7 +435,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.buttonPressur:
                 int pressureInt = (int) pressure;
-                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Pressure").putExtra("background",  backgroundPressur).putExtra("value", (pressureInt+" br")));
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Pressure").putExtra("background",  backgroundPressur).putExtra("value", (pressureInt+" hPa")));
                 break;
         }
     }
