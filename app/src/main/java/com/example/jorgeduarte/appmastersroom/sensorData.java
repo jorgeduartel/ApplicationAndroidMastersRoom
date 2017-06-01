@@ -250,8 +250,6 @@ public class sensorData extends AppCompatActivity {
 
                     //people =  jsonObj.getString("people");
 
-
-
                     date.add(0, jsonObj.getString("date1"));
                     date.add(1, jsonObj1.getString("date1"));
                     date.add(2, jsonObj2.getString("date1"));
@@ -259,7 +257,6 @@ public class sensorData extends AppCompatActivity {
                     date.add(4, jsonObj4.getString("date1"));
                     date.add(5, jsonObj5.getString("date1"));
                     date.add(6, jsonObj6.getString("date1"));
-
 
                     brightness2.add(0, jsonObj.getString("brightAverage"));
                     brightness2.add(1, jsonObj1.getString("brightAverage"));
@@ -269,7 +266,6 @@ public class sensorData extends AppCompatActivity {
                     brightness2.add(5, jsonObj5.getString("brightAverage"));
                     brightness2.add(6, jsonObj6.getString("brightAverage"));
 
-
                     humidity[0] = jsonObj.getDouble("humidityAverage");
                     humidity[1] = jsonObj1.getDouble("humidityAverage");
                     humidity[2] = jsonObj2.getDouble("humidityAverage");
@@ -277,7 +273,6 @@ public class sensorData extends AppCompatActivity {
                     humidity[4] = jsonObj4.getDouble("humidityAverage");
                     humidity[5] = jsonObj5.getDouble("humidityAverage");
                     humidity[6] = jsonObj6.getDouble("humidityAverage");
-
 
                     temperature[0] = jsonObj.getDouble("temperatureAverage");
                     temperature[1] = jsonObj1.getDouble("temperatureAverage");
@@ -441,15 +436,14 @@ public class sensorData extends AppCompatActivity {
                 switch (sensor) {
                     case "Temperature":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " ºc", 6);
+                            getData(sensor, " ºC", 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " ºc", 2);
+                            getData(sensor, " ºC", 2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " ºc", 0);
+                            getData(sensor, " ºC", 0);
                         }
-
                         break;
                     case "Brightness":
                         for (String value: getArguments().getStringArrayList(sensor)) {
@@ -458,7 +452,6 @@ public class sensorData extends AppCompatActivity {
                                 auxItens.add(""+date +"                                    "+value);
                             }
                         }
-                        break;
                     case "Wi-Fi network speed":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
                             getData(sensor, " mbps", 6);
