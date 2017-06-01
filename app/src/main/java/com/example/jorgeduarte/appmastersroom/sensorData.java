@@ -104,7 +104,6 @@ public class sensorData extends AppCompatActivity {
 
         type = 0;
 
-
         // Setup spinner
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setAdapter(new MyAdapter(
@@ -114,7 +113,6 @@ public class sensorData extends AppCompatActivity {
                         sensor+" (Last three days)",
                         sensor+" (Today)",
                 }));
-
 
         spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
@@ -141,7 +139,6 @@ public class sensorData extends AppCompatActivity {
             window.setStatusBarColor(this.getResources().getColor(R.color.gray));
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -181,9 +178,6 @@ public class sensorData extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
     private static class MyAdapter extends ArrayAdapter<String> implements ThemedSpinnerAdapter {
         private final ThemedSpinnerAdapter.Helper mDropDownHelper;
 
@@ -220,7 +214,6 @@ public class sensorData extends AppCompatActivity {
             mDropDownHelper.setDropDownViewTheme(theme);
         }
     }
-
 
     /**
      * Async task class to get json by making HTTP call

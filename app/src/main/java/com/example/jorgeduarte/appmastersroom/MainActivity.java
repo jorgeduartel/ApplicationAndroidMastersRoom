@@ -309,36 +309,55 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        if (ArduinoTemperature <10){
-            buttonThermometer.setBackgroundResource(R.drawable.thermometer_1_10);
-            backgroundTemperature = "thermometer_1_10";
-        }else if (ArduinoTemperature >9 && ArduinoTemperature <16){
+        if (ArduinoTemperature < 5)
+        {
+            buttonThermometer.setBackgroundResource(R.drawable.thermometer_1_5);
+            backgroundTemperature = "thermometer_1_5";
+        }
+        else if (ArduinoTemperature >= 5 && ArduinoTemperature < 10)
+        {
+            buttonThermometer.setBackgroundResource(R.drawable.thermometer_5_10);
+            backgroundTemperature = "thermometer_5_10";
+        }
+        else if (ArduinoTemperature >= 10 && ArduinoTemperature < 15)
+        {
             buttonThermometer.setBackgroundResource(R.drawable.thermometer_10_15);
             backgroundTemperature = "thermometer_10_15";
-        }else if (ArduinoTemperature >15 && ArduinoTemperature <21){
+        }
+        else if (ArduinoTemperature >= 15 && ArduinoTemperature < 20)
+        {
             buttonThermometer.setBackgroundResource(R.drawable.thermometer_15_20);
             backgroundTemperature = "thermometer_15_20";
-        }else if (ArduinoTemperature >20 && ArduinoTemperature <26){
+        }
+        else if (ArduinoTemperature >= 20 && ArduinoTemperature < 25)
+        {
             buttonThermometer.setBackgroundResource(R.drawable.thermometer_20_25);
             backgroundTemperature = "thermometer_20_25";
-        }else if (ArduinoTemperature >25 && ArduinoTemperature <31){
+        }
+        else if (ArduinoTemperature >= 25 && ArduinoTemperature < 30)
+        {
             buttonThermometer.setBackgroundResource(R.drawable.thermometer_25_30);
             backgroundTemperature = "thermometer_25_30";
-        }else if (ArduinoTemperature >30 && ArduinoTemperature <36){
+        }
+        else if (ArduinoTemperature >= 30 && ArduinoTemperature < 35)
+        {
             buttonThermometer.setBackgroundResource(R.drawable.thermometer_30_35);
             backgroundTemperature = "thermometer_30_35";
-        }else if (ArduinoTemperature >35 && ArduinoTemperature <41){
+        }
+        else if (ArduinoTemperature >= 35 && ArduinoTemperature < 40)
+        {
             buttonThermometer.setBackgroundResource(R.drawable.thermometer_35_40);
             backgroundTemperature = "thermometer_35_40";
-        }else if (ArduinoTemperature >40 && ArduinoTemperature <46){
+        }
+        else if (ArduinoTemperature >= 40 && ArduinoTemperature < 45)
+        {
             buttonThermometer.setBackgroundResource(R.drawable.thermometer_40_45);
             backgroundTemperature = "thermometer_40_45";
-        }else if (ArduinoTemperature >45 && ArduinoTemperature <51){
+        }
+        else if (ArduinoTemperature >= 45)
+        {
             buttonThermometer.setBackgroundResource(R.drawable.thermometer_45_50);
             backgroundTemperature = "thermometer_45_50";
-        }else if (ArduinoTemperature >50){
-            buttonThermometer.setBackgroundResource(R.drawable.thermometer_50_55);
-            backgroundTemperature = "thermometer_50_55";
         }
 
         if (speedWifi <2){

@@ -39,7 +39,6 @@ class WifiReceiver extends BroadcastReceiver {
     private volatile Thread verifyNoise;
     private static String url = com.example.jorgeduarte.appmastersroom.url.getUrl();
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -76,7 +75,6 @@ class WifiReceiver extends BroadcastReceiver {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -122,9 +120,6 @@ class WifiReceiver extends BroadcastReceiver {
                         .setContentText("Please, count the number of people in the room.")
                         .setContentIntent(pintent);
 
-
-
-
         mNotificationManager.notify(1, mBuilder.build());
     }
 
@@ -156,7 +151,6 @@ class WifiReceiver extends BroadcastReceiver {
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
-
 
                 } catch (final JSONException e) {
 
