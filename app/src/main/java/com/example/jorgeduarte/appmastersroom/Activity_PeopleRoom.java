@@ -23,7 +23,7 @@ public class Activity_PeopleRoom extends AppCompatActivity {
     private static String baseUrl = com.example.jorgeduarte.appmastersroom.url.getUrl()+"sendPeople/";
     private static String url;
     private ProgressDialog pDialog;
-    private String response;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +72,7 @@ public class Activity_PeopleRoom extends AppCompatActivity {
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
-                    response = jsonObj.getString("people");
+                    String response = jsonObj.getString("people");
 
 
                     Log.e(TAG, "Response POST people: " + response);
@@ -97,7 +97,7 @@ public class Activity_PeopleRoom extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(getApplicationContext(),
-                                "Couldn't get json from server. Check LogCat for possible errors!",
+                                "No server connection!",
                                 Toast.LENGTH_LONG)
                                 .show();
                     }

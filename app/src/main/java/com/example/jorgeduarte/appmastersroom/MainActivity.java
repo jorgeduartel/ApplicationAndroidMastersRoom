@@ -4,9 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.media.MediaRecorder;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
@@ -18,7 +16,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,16 +25,16 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity
 {
     private static final int MAXIMUM_NUMBER_OF_PEOPLE = 20;
+    private static final int MAXIMUM_NOISE_LEVEL = 140;
+    private static final String UNAVAILABLE_DATA = "Unavailable";
 
     private String TAG = MainActivity.class.getSimpleName();
     private ProgressDialog pDialog;
-    private ListView lv;
     private String ArduinoBright = "-9999";
     private double ArduinoTemperature = -9999;
     private double humidity= -9999;
     private double pressure = -9999;
     private String temperature;
-    private Context context;
     private int people = -9999;
     private int speedWifi = -9999;
     private double noise = -9999;
@@ -49,15 +46,8 @@ public class MainActivity extends AppCompatActivity
     private String backgroundHumidity;
     private String backgroundPressure;
 
-    private MediaRecorder recorder;
-
-    private TextView tvNoiseOutput;
-    private double amplitudeDb;
-    private double amplitudeDbF;
-    private volatile Thread verifyNoise;
     // URL to get contacts JSON
     private static String url = com.example.jorgeduarte.appmastersroom.url.getUrl()+"all";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +61,6 @@ public class MainActivity extends AppCompatActivity
             window.setStatusBarColor(this.getResources().getColor(R.color.gray));
         }
 
-
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +71,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
         Button buttonSettings = (Button) findViewById(R.id.buttonSettings);
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,14 +80,9 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
         new GetData().execute();
 
-
-
         update();
-
-
     }
 
     public void getnotification(){
@@ -146,15 +128,14 @@ public class MainActivity extends AppCompatActivity
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
-                    people =  jsonObj.getInt("People");
+                    people = jsonObj.getInt("People");
                     ArduinoBright = jsonObj.getString("ArduinoBright");
-                    ArduinoTemperature =  jsonObj.getDouble("ArduinoTemperature");
-                    humidity =  jsonObj.getDouble("Humidity");
-                    pressure =  jsonObj.getDouble("Pressure");
-                    temperature =  jsonObj.getString("Temperature");
-                    noise =  jsonObj.getDouble("Noise");
-                    speedWifi =  jsonObj.getInt("WifiQuality");
-
+                    ArduinoTemperature = jsonObj.getDouble("ArduinoTemperature");
+                    humidity = jsonObj.getDouble("Humidity");
+                    pressure = jsonObj.getDouble("Pressure");
+                    temperature = jsonObj.getString("Temperature");
+                    noise = jsonObj.getDouble("Noise");
+                    speedWifi = jsonObj.getInt("WifiQuality");
 
                     Log.e(TAG, "ArduinoBright: " + ArduinoBright);
 
@@ -179,7 +160,7 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void run() {
                         Toast.makeText(getApplicationContext(),
-                                "Couldn't get json from server. Check LogCat for possible errors!",
+                                "No server connection!",
                                 Toast.LENGTH_LONG)
                                 .show();
                     }
@@ -230,22 +211,35 @@ public class MainActivity extends AppCompatActivity
 
         String aux_ArduinoBright = ArduinoBright.toLowerCase();
 
-        if(aux_ArduinoBright.contains("dark")) {
+        if(aux_ArduinoBright.contains("dark"))
+        {
             buttonBrightness.setBackgroundResource(R.drawable.brightness_dark);
             backgroundBrightnes = "brightness_dark";
-        }else if(aux_ArduinoBright.contains("dim")) {
+        }
+        else if(aux_ArduinoBright.contains("dim"))
+        {
                 buttonBrightness.setBackgroundResource(R.drawable.brightness_dim);
                 backgroundBrightnes = "brightness_dim";
-        }else if(aux_ArduinoBright.contains("light")) {
+        }
+        else if(aux_ArduinoBright.contains("light"))
+        {
             buttonBrightness.setBackgroundResource(R.drawable.brightness_light);
             backgroundBrightnes = "brightness_light";
-        }else if(aux_ArduinoBright.contains("bright")) {
+        }
+        else if(aux_ArduinoBright.contains("bright"))
+        {
             buttonBrightness.setBackgroundResource(R.drawable.brightness_bright);
             backgroundBrightnes = "brightness_bright";
-        }else if(aux_ArduinoBright.contains("very bright")) {
-                buttonBrightness.setBackgroundResource(R.drawable.brightness_verybright);
-                backgroundBrightnes = "brightness_verybright";
-
+        }
+        else if(aux_ArduinoBright.contains("very bright"))
+        {
+            buttonBrightness.setBackgroundResource(R.drawable.brightness_verybright);
+            backgroundBrightnes = "brightness_verybright";
+        }
+        else
+        {
+            buttonBrightness.setBackgroundResource(R.drawable.brightness);
+            backgroundBrightnes = "brightness";
         }
 
         if (ArduinoTemperature < 5)
@@ -293,45 +287,59 @@ public class MainActivity extends AppCompatActivity
             buttonThermometer.setBackgroundResource(R.drawable.thermometer_40_45);
             backgroundTemperature = "thermometer_40_45";
         }
-        else if (ArduinoTemperature >= 45) {
+        else if (ArduinoTemperature >= 45)
+        {
             buttonThermometer.setBackgroundResource(R.drawable.thermometer_45_50);
             backgroundTemperature = "thermometer_45_50";
-        } else {
-
         }
 
-        if (speedWifi <2){
+        if (speedWifi < 2)
+        {
             buttonSpeedWifi.setBackgroundResource(R.drawable.wifi_red);
             backgroundSpeedWifi = "wifi_red";
-        }else if (speedWifi >2 && speedWifi <11){
+        }
+        else if (speedWifi > 2 && speedWifi < 11)
+        {
             buttonSpeedWifi.setBackgroundResource(R.drawable.wifi_orange);
             backgroundSpeedWifi = "wifi_orange";
-        }else if (speedWifi >10 && speedWifi <21){
+        }
+        else if (speedWifi > 10 && speedWifi < 21)
+        {
             buttonSpeedWifi.setBackgroundResource(R.drawable.wifi_yellow);
             backgroundSpeedWifi = "wifi_yellow";
-        }else if (speedWifi >20){
+        }
+        else if (speedWifi > 20)
+        {
             buttonSpeedWifi.setBackgroundResource(R.drawable.wifi_green2);
             backgroundSpeedWifi = "wifi_green2";
         }
 
-        if (noise <3){
+        if (noise < 3)
+        {
             buttonNoise.setBackgroundResource(R.drawable.noise_green);
             backgroundNoise = "noise_green";
-        }else if (noise >2 && noise <11){
+        }
+        else if (noise > 2 && noise < 11)
+        {
             buttonNoise.setBackgroundResource(R.drawable.noise_orange);
             backgroundNoise = "noise_orange";
-        }else if (noise >10 ){
+        }
+        else if (noise > 10 )
+        {
             buttonNoise.setBackgroundResource(R.drawable.noise_red);
             backgroundNoise = "noise_red";
         }
 
-        if (people <2){
+        if (people < 2)
+        {
             buttonPeople.setBackgroundResource(R.drawable.people_green);
             backgroundPeople = "people_green";
-        }else if (people >=2 && people <11){
+        }else if (people >= 2 && people < 11)
+        {
             buttonPeople.setBackgroundResource(R.drawable.people_yellow);
             backgroundPeople = "people_yellow";
-        }else if (people >10 ){
+        }else if (people > 10)
+        {
             buttonPeople.setBackgroundResource(R.drawable.team);
             backgroundPeople = "team";
         }
@@ -397,45 +405,61 @@ public class MainActivity extends AppCompatActivity
             backgroundHumidity = "humidity4";
         }
 
-        if(ArduinoBright.contains("-9999")) {
-            brightOutput.setText("Unavailable");
+        if(ArduinoBright.contains("-9999"))
+        {
+            brightOutput.setText(UNAVAILABLE_DATA);
         }
-        else{
+        else
+        {
             brightOutput.setText(ArduinoBright);
         }
 
-        if(ArduinoTemperature > -9999) {
+        if(ArduinoTemperature > 0)
+        {
             temperatureOutput.setText((ArduinoTemperature + " ºC"));
         }
-        else{
-            temperatureOutput.setText("Unavailable");
+        else
+        {
+            temperatureOutput.setText(UNAVAILABLE_DATA);
         }
 
-        if(humidity > -9999) {
+        if(humidity > 0)
+        {
             humidityOutput.setText((humidity + " %"));
-        }else{
-            humidityOutput.setText("Unavailable");
+        }
+        else
+        {
+            humidityOutput.setText(UNAVAILABLE_DATA);
         }
 
-        if(pressureInt > -9999) {
+        if(pressureInt > 0)
+        {
             pressureOutput.setText((pressureInt+" hPa"));
-        }else{
-            pressureOutput.setText("Unavailable");
+        }
+        else
+        {
+            pressureOutput.setText(UNAVAILABLE_DATA);
         }
 
-        if(speedWifi > -9999) {
+        if(speedWifi > 0)
+        {
             speedWifiOutput.setText((Integer.toString(speedWifi) + " Mb/s"));
-        }else{
-            speedWifiOutput.setText("Unavailable");
+        }
+        else
+        {
+            speedWifiOutput.setText(UNAVAILABLE_DATA);
         }
 
-        if(noise > -9999) {
-            noiseOutput.setText(noise + " dB");
-        }else {
-            noiseOutput.setText("Unavailable");
+        if(noise > 0)
+        {
+            noiseOutput.setText(noise + "/" + MAXIMUM_NOISE_LEVEL + " dB");
+        }
+        else
+        {
+            noiseOutput.setText(UNAVAILABLE_DATA);
         }
 
-        if(people > -9999)
+        if(people > 0)
         {
             if(people == 1)
             {
@@ -448,7 +472,7 @@ public class MainActivity extends AppCompatActivity
         }
         else
         {
-            peopleOutput.setText("Unavailable");
+            peopleOutput.setText(UNAVAILABLE_DATA);
         }
     }
 
@@ -465,7 +489,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.buttonNoise:
                 noise = Math.round(noise);
-                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Noise").putExtra("background",  backgroundNoise).putExtra("value", noise+" dB"));
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Noise").putExtra("background",  backgroundNoise).putExtra("value", noise + "/" + MAXIMUM_NOISE_LEVEL + " dB"));
                 break;
             case R.id.buttonPeople:
                 if(people == 1)

@@ -42,7 +42,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class sensorData extends AppCompatActivity {
+public class sensorData extends AppCompatActivity
+{
+    private static final String UNAVAILABLE_DATA = "Unavailable";
 
     public String sensor;
     public ArrayList<String> auxItens =  new ArrayList(); // array aux
@@ -325,7 +327,6 @@ public class sensorData extends AppCompatActivity {
                                     .show();
                         }
                     });
-
                 }
             } else {
                 Log.e(TAG, "Couldn't get json from server.");
@@ -333,12 +334,11 @@ public class sensorData extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(getApplicationContext(),
-                                "Couldn't get json from server. Check LogCat for possible errors!",
+                                "No server connection!",
                                 Toast.LENGTH_LONG)
                                 .show();
                     }
                 });
-
             }
 
             return null;
@@ -421,10 +421,16 @@ public class sensorData extends AppCompatActivity {
             if (type==0) {
                 View rootView = inflater.inflate(R.layout.fragment_sensor_data, container, false);
 
-
                 TextView textView = (TextView) rootView.findViewById(R.id.textValue);
 
-                textView.setText(("Now "+getArguments().getString("value")));
+                if(getArguments().getString("value").contains("-9999"))
+                {
+                    textView.setText(UNAVAILABLE_DATA);
+                }
+                else
+                {
+                    textView.setText(("Now "+getArguments().getString("value")));
+                }
 
                 TextView textView2 = new TextView(getActivity().getApplicationContext());
                 textView2.setText("Date                                    Value");
@@ -512,7 +518,7 @@ public class sensorData extends AppCompatActivity {
                         break;
                 }
 
-                adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, auxItens);
+                adapter = new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, auxItens);
                 listView = (ListView) rootView.findViewById(R.id.dataList);
                 listView.setAdapter(adapter);
                 listView.addHeaderView(textView2);
@@ -520,7 +526,6 @@ public class sensorData extends AppCompatActivity {
                 String nameBackground = bundle.getString("nameBackground");
 
                 ImageView imageSensor = (ImageView) rootView.findViewById(R.id.imageSensor);
-
 
                 ImageView colorView = (ImageView) rootView.findViewById(R.id.colorView);
                 Drawable d = getDrawable(nameBackground);
@@ -531,7 +536,14 @@ public class sensorData extends AppCompatActivity {
                 View rootView = inflater.inflate(R.layout.fragment_sensor_chart, container, false);
                 TextView textView = (TextView) rootView.findViewById(R.id.textValue);
 
-                textView.setText(("Now "+getArguments().getString("value")));
+                if(getArguments().getString("value").contains("-9999"))
+                {
+                    textView.setText(UNAVAILABLE_DATA);
+                }
+                else
+                {
+                    textView.setText(("Now "+getArguments().getString("value")));
+                }
 
                 BarChart barChart = (BarChart) rootView.findViewById(R.id.chart);
 

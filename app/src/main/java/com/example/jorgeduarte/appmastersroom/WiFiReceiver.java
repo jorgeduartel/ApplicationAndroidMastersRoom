@@ -35,16 +35,13 @@ class WifiReceiver extends BroadcastReceiver {
         String name = wifiInfo.getSSID().toLowerCase();
         int rssi = wifiInfo.getRssi();
 
-        if (name.contains("wifi")) {
+        if (name.contains("e-mei")) {
 
             speed = wifiInfo.getLinkSpeed();
             Log.d("WifiReceiver", "Don't have Wi-Fi connection" + name);
 
-
             checkSpeedWifi(context);
             sendNotification(context);
-
-
 
             start();
             while (noise<0) {
@@ -55,7 +52,6 @@ class WifiReceiver extends BroadcastReceiver {
             stop();
 
             new GetData().execute();
-
         }
     }
 
@@ -104,9 +100,6 @@ class WifiReceiver extends BroadcastReceiver {
         else
             return -9999;
     }
-
-
-
 
     public void sendNotification(Context context){
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
