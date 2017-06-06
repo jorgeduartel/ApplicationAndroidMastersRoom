@@ -5,91 +5,106 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.jorgeduarte.appmastersroom.sensorData$PlaceholderFragment">
 
-    <ScrollView
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="UselessParent">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="358dp"
+            android:layout_height="228dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"
+            android:background="@drawable/rooom4"
+            android:cropToPadding="true"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription,MissingConstraints"
+            tools:layout_editor_absoluteX="2dp" />
+
+        <ImageView
+            android:id="@+id/colorView"
+            android:layout_width="360dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="53dp"
+            android:background="@color/Blue_People"
+            android:contentDescription=""
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageSensor"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/imageSensor"
+            android:layout_width="106dp"
+            android:layout_height="106dp"
+            android:layout_marginLeft="120dp"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/brightness"
+            android:contentDescription=""
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView"
+            tools:ignore="ContentDescription,RtlHardcoded" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="73dp"
+            android:layout_height="73dp"
+            android:layout_gravity="top|left"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="78dp"
+            android:layout_marginTop="139dp"
+            app:layout_anchor="@+id/include"
+            app:layout_anchorGravity="bottom|right"
+            app:layout_constraintHorizontal_bias="0.039"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/countpeople4"
+            tools:ignore="RtlHardcoded,UnknownIdInLayout"
+            tools:onClick="postPeople" />
+
+        <TextView
+            android:id="@+id/textValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="266dp"
+            android:layout_marginTop="195dp"
+            android:text="TextView"
+            android:textColor="@color/White"
+            app:layout_constraintLeft_toLeftOf="@+id/colorView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/section_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_weight="1"
+            tools:ignore="ObsoleteLayoutParam" />
 
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/constraintLayout">
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="358dp"
-                    android:layout_height="228dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/rooom4"
-                    android:cropToPadding="true"
-                    tools:ignore="ContentDescription,MissingConstraints"
-                    tools:layout_editor_absoluteX="2dp"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/colorView"
-                    android:layout_width="360dp"
-                    android:layout_height="55dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="53dp"
-                    android:background="@color/Blue_People"
-                    android:contentDescription=""
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/imageSensor"
-                    tools:ignore="MissingConstraints" />
-
-                <ImageView
-                    android:id="@+id/imageSensor"
-                    android:layout_width="106dp"
-                    android:layout_height="106dp"
-                    android:layout_marginLeft="120dp"
-                    android:layout_marginTop="120dp"
-                    android:background="@drawable/brightness"
-                    android:contentDescription=""
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/imageView"
-                    tools:ignore="ContentDescription,RtlHardcoded"
-                    android:layout_marginStart="120dp" />
-                <TextView
-                    android:id="@+id/textValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="266dp"
-                    android:layout_marginTop="195dp"
-                    android:text="TextView"
-                    android:textColor="@color/White"
-                    app:layout_constraintLeft_toLeftOf="@+id/colorView"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </android.support.constraint.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/section_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                tools:ignore="ObsoleteLayoutParam" />
-
-            <ListView
-                android:id="@+id/dataList"
-                android:background="@color/gray"
-                android:layout_width="match_parent"
-                android:layout_height="479dp"
-                tools:ignore="NestedScrolling"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/constraintLayout" />
+        <ListView
+            android:id="@+id/dataList"
+            android:layout_width="match_parent"
+            android:layout_height="330dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/section_label"
+            android:layout_marginTop="210dp"
+            android:background="@color/gray"
+            tools:ignore="NestedScrolling" />
 
 
-        </RelativeLayout>
-
-    </ScrollView>
+    </RelativeLayout>
 
 </RelativeLayout>
