@@ -1,7 +1,5 @@
 package com.example.jorgeduarte.appmastersroom;
 
-import android.content.Context;
-import android.net.wifi.WifiManager;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -14,10 +12,6 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-/**
- * Created by Ravi Tamada on 01/09/16.
- * www.androidhive.info
- */
 public class HttpHandler { //add
 
     private static final String TAG = HttpHandler.class.getSimpleName();
@@ -28,13 +22,10 @@ public class HttpHandler { //add
     public String makeServiceCall(String reqUrl, String requestMethod) {
         String response = null;
 
-
-
         try {
             URL url = new URL(reqUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod(requestMethod);
-
 
             // read the response
             InputStream in = new BufferedInputStream(conn.getInputStream());
