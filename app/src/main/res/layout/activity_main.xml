@@ -94,7 +94,7 @@
 
 
         <Button
-            android:id="@+id/buttonPressur"
+            android:id="@+id/buttonPressure"
             android:layout_width="126dp"
             android:layout_height="126dp"
             android:layout_marginLeft="50dp"
@@ -193,7 +193,7 @@
             android:textColor="@color/White"
             android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonPressur"
+            app:layout_constraintTop_toBottomOf="@+id/buttonPressure"
             tools:text="textPressure" />
 
         <TextView
@@ -217,11 +217,11 @@
             android:layout_marginLeft="11dp"
             android:layout_marginStart="13dp"
             android:layout_marginTop="68dp"
-            android:background="@drawable/airhumidity"
+            android:background="@drawable/humidity1"
             android:onClick="sensorFactory"
-            app:layout_constraintLeft_toRightOf="@+id/buttonPressur"
+            app:layout_constraintLeft_toRightOf="@+id/buttonPressure"
             app:layout_constraintTop_toBottomOf="@+id/buttonThermometer"
-            app:srcCompat="@drawable/airhumidity" />
+            app:srcCompat="@drawable/humidity1" />
 
         <Button
             android:id="@+id/buttonSpeedWifi"
@@ -233,7 +233,7 @@
             android:background="@drawable/wifi"
             android:onClick="sensorFactory"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonPressur"
+            app:layout_constraintTop_toBottomOf="@+id/buttonPressure"
             app:srcCompat="@drawable/wifi" />
 
         <Button
