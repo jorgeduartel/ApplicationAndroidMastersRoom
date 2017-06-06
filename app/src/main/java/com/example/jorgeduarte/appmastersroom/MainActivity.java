@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,9 +25,9 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
+    private static final int MAXIMUM_NUMBER_OF_PEOPLE = 20;
 
     private String TAG = MainActivity.class.getSimpleName();
     private ProgressDialog pDialog;
@@ -211,9 +210,6 @@ public class MainActivity extends AppCompatActivity {
              * */
         }
     }
-
-
-
 
     public void update(){
         TextView brightOutput = (TextView) findViewById(R.id.textArduinoBright);
@@ -439,9 +435,19 @@ public class MainActivity extends AppCompatActivity {
             noiseOutput.setText("Unavailable");
         }
 
-        if(people > -9999) {
-            peopleOutput.setText(people + " un");
-        }else {
+        if(people > -9999)
+        {
+            if(people == 1)
+            {
+                peopleOutput.setText(people + "/" + MAXIMUM_NUMBER_OF_PEOPLE + " person");
+            }
+            else
+            {
+                peopleOutput.setText(people + "/" + MAXIMUM_NUMBER_OF_PEOPLE + " people");
+            }
+        }
+        else
+        {
             peopleOutput.setText("Unavailable");
         }
     }
@@ -462,7 +468,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Noise").putExtra("background",  backgroundNoise).putExtra("value", noise+" dB"));
                 break;
             case R.id.buttonPeople:
-                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Number of people").putExtra("background",  backgroundPeople).putExtra("value", people+" un"));
+                if(people == 1)
+                {
+                    startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Number of people").putExtra("background",  backgroundPeople).putExtra("value", people + "/" + MAXIMUM_NUMBER_OF_PEOPLE + " person"));
+                }
+                else
+                {
+                    startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Number of people").putExtra("background",  backgroundPeople).putExtra("value", people + "/" + MAXIMUM_NUMBER_OF_PEOPLE + " people"));
+                }
                 break;
             case R.id.buttonHumidity:
                 startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Humidity").putExtra("background",  backgroundHumidity).putExtra("value", (humidity+" %")));
