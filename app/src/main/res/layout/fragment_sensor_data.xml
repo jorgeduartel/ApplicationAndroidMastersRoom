@@ -105,8 +105,6 @@
             tools:ignore="NestedScrolling" />
 
 
-        </RelativeLayout>
-
-    </ScrollView>
+    </RelativeLayout>
 
 </RelativeLayout>
