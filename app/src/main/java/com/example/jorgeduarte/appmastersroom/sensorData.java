@@ -586,7 +586,7 @@ public class sensorData extends AppCompatActivity {
                             getDataChartString(group1, sensor, "",7,19);
                         }
                         else {
-                            getDataChart(group1, sensor, "",13,15);
+                            getDataChart(group1, sensor, "",7,19);
                         }
                     }
 
@@ -635,7 +635,12 @@ public class sensorData extends AppCompatActivity {
             for (int i = startlength; i <= length; i++) {
 
                 if (values[i] >= 0) {
-                    group1.add(new BarEntry((float) values[i], i));
+                    if(i > 6) {
+                        int aux = i-6;
+                        group1.add(new BarEntry((float) values[i], aux));
+                    }else {
+                        group1.add(new BarEntry((float) values[i], i));
+                    }
                 }
 
             }
@@ -669,13 +674,33 @@ public class sensorData extends AppCompatActivity {
                             case "Very bright":
                                 valueChart = 5;
                                 break;
-
+                            case "1":
+                                valueChart = 1;
+                                break;
+                            case "2":
+                                valueChart = 2;
+                                break;
+                            case "3":
+                                valueChart = 3;
+                                break;
+                            case "4":
+                                valueChart = 4;
+                                break;
+                            case "5":
+                                valueChart = 5;
+                                break;
                         }
                     } else {
                         valueChart = -9999;
                     }
                     if (valueChart >= 0) {
-                        group1.add(new BarEntry((float) valueChart, i));
+                        if(i > 6) {
+                            int aux = i-6;
+                            group1.add(new BarEntry((float) valueChart, aux));
+                        }else {
+                            group1.add(new BarEntry((float) valueChart, i));
+                        }
+
                     }
                 }
             }
@@ -743,6 +768,7 @@ public class sensorData extends AppCompatActivity {
                 labels.add("Today");
             }else if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
                 labels.add("8:00");
+                labels.add("9:00");
                 labels.add("10:00");
                 labels.add("11:00");
                 labels.add("12:00");
@@ -750,6 +776,10 @@ public class sensorData extends AppCompatActivity {
                 labels.add("14:00");
                 labels.add("15:00");
                 labels.add("16:00");
+                labels.add("17:00");
+                labels.add("18:00");
+                labels.add("19:00");
+                labels.add("20:00");
 
 
             }
