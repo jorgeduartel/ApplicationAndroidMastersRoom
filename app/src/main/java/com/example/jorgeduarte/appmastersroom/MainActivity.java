@@ -414,7 +414,7 @@ public class MainActivity extends AppCompatActivity
             brightOutput.setText(ArduinoBright);
         }
 
-        if(ArduinoTemperature >= 0)
+        if(ArduinoTemperature >= -50)
         {
             temperatureOutput.setText((ArduinoTemperature + " ºC"));
         }
