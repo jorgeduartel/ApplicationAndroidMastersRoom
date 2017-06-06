@@ -425,7 +425,7 @@ public class MainActivity extends AppCompatActivity
 
         if(humidity >= 0)
         {
-            humidityOutput.setText((humidity + " %"));
+            humidityOutput.setText((humidity + "%"));
         }
         else
         {
@@ -479,13 +479,13 @@ public class MainActivity extends AppCompatActivity
     public void sensorFactory(View view){
         switch (view.getId()) {
             case R.id.buttonThermometer:
-                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Temperature").putExtra("background",  backgroundTemperature).putExtra("value", ArduinoTemperature+" ºC"));
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Temperature").putExtra("background",  backgroundTemperature).putExtra("value", ArduinoTemperature + " ºC"));
                 break;
             case R.id.buttonBrightness:
                 startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Brightness").putExtra("background",  backgroundBrightnes).putExtra("value", ArduinoBright));
                 break;
             case R.id.buttonSpeedWifi:
-                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Wi-Fi network speed").putExtra("background",  backgroundSpeedWifi).putExtra("value", (Integer.toString(speedWifi)+" Mb/s")));
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Wi-Fi network speed").putExtra("background",  backgroundSpeedWifi).putExtra("value", (Integer.toString(speedWifi) + " Mb/s")));
                 break;
             case R.id.buttonNoise:
                 noise = Math.round(noise);
@@ -502,11 +502,11 @@ public class MainActivity extends AppCompatActivity
                 }
                 break;
             case R.id.buttonHumidity:
-                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Humidity").putExtra("background",  backgroundHumidity).putExtra("value", (humidity+" %")));
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Humidity").putExtra("background",  backgroundHumidity).putExtra("value", (humidity + "%")));
                 break;
             case R.id.buttonPressure:
                 int pressureInt = (int) pressure;
-                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Pressure").putExtra("background",  backgroundPressure).putExtra("value", (pressureInt+" hPa")));
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Pressure").putExtra("background",  backgroundPressure).putExtra("value", (pressureInt + " hPa")));
                 break;
         }
     }
