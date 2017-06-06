@@ -358,7 +358,6 @@ public class sensorData extends AppCompatActivity
             pDialog.show();
 
         }
-
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
@@ -450,98 +449,98 @@ public class sensorData extends AppCompatActivity
                 }
 
                 TextView textView2 = new TextView(getActivity().getApplicationContext());
-                textView2.setText("Date                                    Value");
+                textView2.setText("      Date                                                                     Value");
 
-            if(getArguments().getDoubleArray("Temperature")[0] > 0 )
-            {
+                if(getArguments().getDoubleArray("Temperature")[0] > 0 )
+                {
 
-                switch (sensor) {
-                    case "Temperature":
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " ºC", 0, 6);
-                        }else
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " ºC", 0, 2);
-                        }else
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " ºC", 7, 19);
-                        }
-                        break;
-                    case "Brightness":
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getDataString(sensor, "", 0, 6);
-                        }else
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getDataString(sensor, "", 0, 2);
-                        }else
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getDataString(sensor, "", 7, 19);
-                        }
-                        break;
-                    case "Wi-Fi network speed":
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " Mb/s", 0, 6);
-                        }else
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " Mb/s", 0, 2);
-                        }else
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " Mb/s", 7, 19);
-                        }
-                        break;
-                    case "Noise":
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " dB", 0, 6);
-                        }else
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " dB", 0, 2);
-                        }else
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " dB", 7, 19);
-                        }
-                        break;
-                    case "Number of people":
-                        fab.setVisibility(View.VISIBLE);
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " people", 0, 6);
-                        }else
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " people", 0, 2);
-                        }else
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " people", 7, 19);
-                        }
-                        break;
-                    case "Humidity":
+                    switch (sensor) {
+                        case "Temperature":
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
+                                getData(sensor, " ºC", 0, 6);
+                            }else
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
+                                getData(sensor, " ºC", 0, 2);
+                            }else
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
+                                getData(sensor, " ºC", 7, 19);
+                            }
+                            break;
+                        case "Brightness":
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
+                                getDataString(sensor, "", 0, 6);
+                            }else
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
+                                getDataString(sensor, "", 0, 2);
+                            }else
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
+                                getDataString(sensor, "", 7, 19);
+                            }
+                            break;
+                        case "Wi-Fi network speed":
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
+                                getData(sensor, " Mb/s", 0, 6);
+                            }else
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
+                                getData(sensor, " Mb/s", 0, 2);
+                            }else
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
+                                getData(sensor, " Mb/s", 7, 19);
+                            }
+                            break;
+                        case "Noise":
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
+                                getData(sensor, " dB", 0, 6);
+                            }else
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
+                                getData(sensor, " dB", 0, 2);
+                            }else
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
+                                getData(sensor, " dB", 7, 19);
+                            }
+                            break;
+                        case "Number of people":
+                            fab.setVisibility(View.VISIBLE);
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
+                                getData(sensor, " people", 0, 6);
+                            }else
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
+                                getData(sensor, " people", 0, 2);
+                            }else
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
+                                getData(sensor, " people", 7, 19);
+                            }
+                            break;
+                        case "Humidity":
 
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, "%", 0, 6);
-                        }else
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, "%", 0, 2);
-                        }else
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, "%", 7, 19);
-                        }
-                        break;
-                    case "Pressure":
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " hPa", 0, 6);
-                        }else
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " hPa", 0, 2);
-                        }else
-                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " hPa", 7, 19);
-                        }
-                        break;
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
+                                getData(sensor, " %", 0, 6);
+                            }else
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
+                                getData(sensor, " %", 0, 2);
+                            }else
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
+                                getData(sensor, " %", 7, 19);
+                            }
+                            break;
+                        case "Pressure":
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
+                                getData(sensor, " hPa", 0, 6);
+                            }else
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
+                                getData(sensor, " hPa", 0, 2);
+                            }else
+                            if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
+                                getData(sensor, " hPa", 7, 19);
+                            }
+                            break;
+                    }
+
+                    adapter = new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, auxItens);
+                    listView = (ListView) rootView.findViewById(R.id.dataList);
+                    listView.setAdapter(adapter);
+                    listView.addHeaderView(textView2);
                 }
-
-                adapter = new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, auxItens);
-                listView = (ListView) rootView.findViewById(R.id.dataList);
-                listView.setAdapter(adapter);
-                listView.addHeaderView(textView2);
-            }
                 String nameBackground = bundle.getString("nameBackground");
 
                 ImageView imageSensor = (ImageView) rootView.findViewById(R.id.imageSensor);
@@ -721,9 +720,9 @@ public class sensorData extends AppCompatActivity
                     if (!Double.isNaN(values[i]) && date.get(i) != null) {
 
                         if (values[i] < 0) {
-                            auxItens.add("" + date.get(i) + "                        " + "Unavailable data");
+                            auxItens.add("" + date.get(i) + "                            " + "Unavailable data");
                         } else {
-                            auxItens.add("" + date.get(i) + "                                    " + values[i] + unit);
+                            auxItens.add("" + date.get(i) + "                                           " + values[i] + unit);
                         }
 
                     }
@@ -748,6 +747,22 @@ public class sensorData extends AppCompatActivity
 
                         if (value.contains("-9999")) {
                             auxItens.add("" + date.get(i) + "                          " + "Unavailable data");
+                        }
+                        else
+                        if (value.contains("1")) {
+                            auxItens.add("" + date.get(i) + "                          " + "Dark");
+                        }else
+                        if (value.contains("2")) {
+                            auxItens.add("" + date.get(i) + "                          " + "Dim");
+                        }else
+                        if (value.contains("3")) {
+                            auxItens.add("" + date.get(i) + "                          " + "Light");
+                        }else
+                        if (value.contains("4")) {
+                            auxItens.add("" + date.get(i) + "                          " + "Bright");
+                        }else
+                        if (value.contains("5")) {
+                            auxItens.add("" + date.get(i) + "                          " + "Very bright");
                         } else {
                             auxItens.add("" + date.get(i) + "                                    " + value + unit);
                         }
@@ -760,14 +775,14 @@ public class sensorData extends AppCompatActivity
         private ArrayList<String> getXAxisValues() {
             ArrayList<String> labels = new ArrayList<>();
             if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-            labels.add("Su");
-            labels.add("Mo");
-            labels.add("Tu");
-            labels.add("We");
-            labels.add("Th");
-            labels.add("Fr");
-            labels.add("Sa");
-           }
+                labels.add("Su");
+                labels.add("Mo");
+                labels.add("Tu");
+                labels.add("We");
+                labels.add("Th");
+                labels.add("Fr");
+                labels.add("Sa");
+            }
             else if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
                 labels.add("Before yesterday");
                 labels.add("Yesterday");
