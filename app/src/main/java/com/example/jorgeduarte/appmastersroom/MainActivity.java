@@ -61,15 +61,7 @@ public class MainActivity extends AppCompatActivity
             window.setStatusBarColor(this.getResources().getColor(R.color.gray));
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                startActivity(new Intent(getApplicationContext(),Activity_PeopleRoom.class));
-
-            }
-        });
 
         Button buttonSettings = (Button) findViewById(R.id.buttonSettings);
         buttonSettings.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +76,8 @@ public class MainActivity extends AppCompatActivity
 
         update();
     }
+
+
 
     public void getnotification(){
 

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -85,6 +86,7 @@ public class sensorData extends AppCompatActivity
 
         type = 0;
 
+
         // Setup spinner
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setAdapter(new MyAdapter(
@@ -117,6 +119,8 @@ public class sensorData extends AppCompatActivity
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(this.getResources().getColor(R.color.gray));
         }
+
+
     }
 
     @Override
@@ -422,6 +426,18 @@ public class sensorData extends AppCompatActivity
             if (type==0) {
                 View rootView = inflater.inflate(R.layout.fragment_sensor_data, container, false);
 
+
+                FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.floatingActionButton);
+                fab.setVisibility(View.GONE);
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        startActivity(new Intent(getActivity().getApplicationContext(),Activity_PeopleRoom.class));
+
+                    }
+                });
+
                 TextView textView = (TextView) rootView.findViewById(R.id.textValue);
 
                 if(getArguments().getString("value").contains("-9999"))
@@ -438,6 +454,7 @@ public class sensorData extends AppCompatActivity
 
             if(getArguments().getDoubleArray("Temperature")[0] > 0 )
             {
+
                 switch (sensor) {
                     case "Temperature":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
@@ -484,6 +501,7 @@ public class sensorData extends AppCompatActivity
                         }
                         break;
                     case "Number of people":
+                        fab.setVisibility(View.VISIBLE);
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
                             getData(sensor, " people", 0, 6);
                         }else
@@ -729,7 +747,7 @@ public class sensorData extends AppCompatActivity
                     if (value != null && date.get(i) != null) {
 
                         if (value.contains("-9999")) {
-                            auxItens.add("" + date.get(i) + "                        " + "Unavailable data");
+                            auxItens.add("" + date.get(i) + "                          " + "Unavailable data");
                         } else {
                             auxItens.add("" + date.get(i) + "                                    " + value + unit);
                         }

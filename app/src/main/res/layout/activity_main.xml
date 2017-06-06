@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -20,21 +21,7 @@
         tools:ignore="ScrollViewSize">
 
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton2"
-            android:layout_width="73dp"
-            android:layout_height="73dp"
-            android:layout_gravity="top|left"
-            android:layout_margin="@dimen/fab_margin"
-            android:layout_marginRight="0dp"
-            android:layout_marginTop="-3dp"
-            app:layout_anchor="@+id/include"
-            app:layout_anchorGravity="bottom|right"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/countpeople4"
-            tools:ignore="RtlHardcoded,UnknownIdInLayout"
-            tools:onClick="postPeople" />
+
 
 
         <TextView
