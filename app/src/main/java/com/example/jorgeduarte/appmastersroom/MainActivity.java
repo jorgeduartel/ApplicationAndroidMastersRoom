@@ -414,7 +414,7 @@ public class MainActivity extends AppCompatActivity
             brightOutput.setText(ArduinoBright);
         }
 
-        if(ArduinoTemperature > 0)
+        if(ArduinoTemperature >= 0)
         {
             temperatureOutput.setText((ArduinoTemperature + " ºC"));
         }
@@ -423,7 +423,7 @@ public class MainActivity extends AppCompatActivity
             temperatureOutput.setText(UNAVAILABLE_DATA);
         }
 
-        if(humidity > 0)
+        if(humidity >= 0)
         {
             humidityOutput.setText((humidity + " %"));
         }
@@ -432,7 +432,7 @@ public class MainActivity extends AppCompatActivity
             humidityOutput.setText(UNAVAILABLE_DATA);
         }
 
-        if(pressureInt > 0)
+        if(pressureInt >= 0)
         {
             pressureOutput.setText((pressureInt+" hPa"));
         }
@@ -441,7 +441,7 @@ public class MainActivity extends AppCompatActivity
             pressureOutput.setText(UNAVAILABLE_DATA);
         }
 
-        if(speedWifi > 0)
+        if(speedWifi >= 0)
         {
             speedWifiOutput.setText((Integer.toString(speedWifi) + " Mb/s"));
         }
@@ -450,7 +450,7 @@ public class MainActivity extends AppCompatActivity
             speedWifiOutput.setText(UNAVAILABLE_DATA);
         }
 
-        if(noise > 0)
+        if(noise >= 0)
         {
             noiseOutput.setText(noise + "/" + MAXIMUM_NOISE_LEVEL + " dB");
         }
@@ -459,7 +459,7 @@ public class MainActivity extends AppCompatActivity
             noiseOutput.setText(UNAVAILABLE_DATA);
         }
 
-        if(people > 0)
+        if(people >= 0)
         {
             if(people == 1)
             {

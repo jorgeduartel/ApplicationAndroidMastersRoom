@@ -354,6 +354,7 @@ public class sensorData extends AppCompatActivity
             pDialog.show();
 
         }
+
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
