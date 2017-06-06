@@ -37,7 +37,6 @@
             tools:onClick="postPeople" />
 
 
-
         <TextView
             android:id="@+id/textArduinoBright"
             android:layout_width="128dp"
@@ -50,7 +49,7 @@
             android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonBrightness"
-            tools:text="brigth" />
+            tools:text="Brightness" />
 
         <TextView
             android:id="@+id/textTemperature"
@@ -117,7 +116,7 @@
             android:textAlignment="center"
             android:textColor="@color/White"
             android:textSize="24sp"
-            app:layout_constraintLeft_toRightOf="@+id/textView3"
+            app:layout_constraintLeft_toRightOf="@+id/textSpeedWifi"
             app:layout_constraintTop_toBottomOf="@+id/buttonPeople"
             tools:text="People" />
 
@@ -138,7 +137,7 @@
             tools:text="Settings" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textSpeedWifi"
             android:layout_width="128dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
@@ -150,7 +149,7 @@
             android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonSpeedWifi"
-            tools:text="SpeedWifi" />
+            tools:text="Wi-Fi" />
 
         <TextView
             android:id="@+id/textNoise"
@@ -168,21 +167,6 @@
             app:layout_constraintTop_toBottomOf="@+id/buttonNoise" />
 
         <TextView
-            android:id="@+id/textSpeedWifi"
-            android:layout_width="128dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="9dp"
-            android:lineSpacingExtra="24sp"
-            android:textAlignment="center"
-            android:textColor="@color/White"
-            android:textSize="24sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonSpeedWifi"
-            tools:text="SpeedWifi" />
-
-        <TextView
             android:id="@+id/textPressure"
             android:layout_width="126dp"
             android:layout_height="28dp"
@@ -194,7 +178,7 @@
             android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonPressure"
-            tools:text="textPressure" />
+            tools:text="Pressure" />
 
         <TextView
             android:id="@+id/textHumidity"
@@ -208,7 +192,7 @@
             android:textSize="24sp"
             app:layout_constraintLeft_toRightOf="@+id/textPressure"
             app:layout_constraintTop_toBottomOf="@+id/buttonHumidity"
-            tools:text="Humidity:" />
+            tools:text="Humidity" />
 
         <Button
             android:id="@+id/buttonHumidity"
@@ -246,7 +230,7 @@
             android:background="@drawable/noise_red"
             android:onClick="sensorFactory"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/textSpeedWifi"
             app:srcCompat="@drawable/noise_red" />
 
         <Button

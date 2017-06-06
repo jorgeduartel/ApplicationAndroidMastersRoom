@@ -97,8 +97,7 @@ public class sensorData extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int positionS, long id) {
-                // When the given dropdown item is selected, show its contents in the
-                // container view.
+                // When the given dropdown item is selected, show its contents in the container view.
                 position = positionS+1;
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, PlaceholderFragment.newInstance(positionS + 1, nameBackground, sensor, type, value, brightness, date, humidity, temperature, pressure, people, noise, wifiSpeed))
@@ -375,7 +374,6 @@ public class sensorData extends AppCompatActivity {
 
         public ArrayList<String> auxItens =  new ArrayList(); // array aux
         public ListView listView;
-        private ArrayList<String> arrayList;
         private ArrayAdapter<String> adapter;
 
 
