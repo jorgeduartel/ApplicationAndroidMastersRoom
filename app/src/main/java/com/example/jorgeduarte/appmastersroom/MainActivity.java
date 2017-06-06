@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private String backgroundNoise;
     private String backgroundPeople;
     private String backgroundHumidity;
-    private String backgroundPressur;
+    private String backgroundPressure;
 
     private MediaRecorder recorder;
 
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
         Button buttonSpeedWifi = (Button) findViewById(R.id.buttonSpeedWifi);
         Button buttonNoise = (Button) findViewById(R.id.buttonNoise);
         Button buttonPeople = (Button) findViewById(R.id.buttonPeople);
-        Button buttonPressur = (Button) findViewById(R.id.buttonPressur);
+        Button buttonPressure = (Button) findViewById(R.id.buttonPressure);
         Button buttonHumidity = (Button) findViewById(R.id.buttonHumidity);
 
         switch (ArduinoBright){
@@ -346,8 +346,62 @@ public class MainActivity extends AppCompatActivity {
         humidity = Math.round(humidity);
         int pressureInt = (int) pressure;
 
-        backgroundPressur = "pressure";
-        backgroundHumidity = "airhumidity";
+        if(pressure < 990)
+        {
+            buttonPressure.setBackgroundResource(R.drawable.pressure1_1);
+            backgroundPressure = "pressure1_1";
+        }
+        else if(pressure >= 990 && pressure < 995)
+        {
+            buttonPressure.setBackgroundResource(R.drawable.pressure2_1);
+            backgroundPressure = "pressure2_1";
+        }
+        else if(pressure >= 995 && pressure < 1000)
+        {
+            buttonPressure.setBackgroundResource(R.drawable.pressure3_1);
+            backgroundPressure = "pressure3_1";
+        }
+        else if(pressure >= 1000 && pressure < 1005)
+        {
+            buttonPressure.setBackgroundResource(R.drawable.pressure4_1);
+            backgroundPressure = "pressure4_1";
+        }
+        else if(pressure >= 1005 && pressure < 1010)
+        {
+            buttonPressure.setBackgroundResource(R.drawable.pressure5_1);
+            backgroundPressure = "pressure5_1";
+        }
+        else if(pressure >= 1010 && pressure < 1015)
+        {
+            buttonPressure.setBackgroundResource(R.drawable.pressure6_1);
+            backgroundPressure = "pressure6_1";
+        }
+        else if(pressure >= 1015)
+        {
+            buttonPressure.setBackgroundResource(R.drawable.pressure7_1);
+            backgroundPressure = "pressure7_1";
+        }
+
+        if(humidity < 25)
+        {
+            buttonHumidity.setBackgroundResource(R.drawable.humidity1);
+            backgroundHumidity = "humidity1";
+        }
+        else if(humidity >= 25 && humidity < 50)
+        {
+            buttonHumidity.setBackgroundResource(R.drawable.humidity2);
+            backgroundHumidity = "humidity2";
+        }
+        else if(humidity >= 50 && humidity < 75)
+        {
+            buttonHumidity.setBackgroundResource(R.drawable.humidity3);
+            backgroundHumidity = "humidity3";
+        }
+        else if(humidity >= 75 && humidity < 100)
+        {
+            buttonHumidity.setBackgroundResource(R.drawable.humidity4);
+            backgroundHumidity = "humidity4";
+        }
 
         if(ArduinoBright.contains("-9999")) {
             brightOutput.setText("Unavailable");
@@ -415,9 +469,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.buttonHumidity:
                 startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Humidity").putExtra("background",  backgroundHumidity).putExtra("value", (humidity+" %")));
                 break;
-            case R.id.buttonPressur:
+            case R.id.buttonPressure:
                 int pressureInt = (int) pressure;
-                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Pressure").putExtra("background",  backgroundPressur).putExtra("value", (pressureInt+" hPa")));
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Pressure").putExtra("background",  backgroundPressure).putExtra("value", (pressureInt+" hPa")));
                 break;
         }
     }
