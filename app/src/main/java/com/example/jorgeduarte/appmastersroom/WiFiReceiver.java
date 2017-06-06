@@ -60,13 +60,13 @@ class WifiReceiver extends BroadcastReceiver {
 
 
 
-            /*start();
+            start();
             while (noise<0) {
               double s =  getAmplitude();
                 Log.d("Noise","  Noise" + noise);
 
             }
-            stop();*/
+            stop();
 
             new GetData().execute();
 

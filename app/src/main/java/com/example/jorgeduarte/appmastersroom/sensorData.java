@@ -327,6 +327,7 @@ public class sensorData extends AppCompatActivity {
                         noise[(i+7)] = value.getDouble("noise");
                         people[(i+7)] = value.getDouble("nPessoas");
                         pressure[(i+7)] = value.getDouble("pressure");
+                        brightness2.add((i+7), value.getString("arduinoBrightValue"));
                         date.add((i+7), value.getString("hour"));
 
                     }
@@ -630,6 +631,7 @@ public class sensorData extends AppCompatActivity {
 
 
             double values[] = getArguments().getDoubleArray(sensor);
+
             for (int i = startlength; i <= length; i++) {
 
                 if (values[i] >= 0) {
@@ -649,33 +651,33 @@ public class sensorData extends AppCompatActivity {
 
             float valueChart = -9999;
             for(int i=startlength; i<=length; i++){
-                if(!values.get(i).isEmpty()){
-                    switch (values.get(i))
-                    {
-                        case "Dark":
-                            valueChart = 1;
-                            break;
-                        case "Dim":
-                            valueChart = 2;
-                            break;
-                        case "Light":
-                            valueChart = 3;
-                            break;
-                        case "Bright":
-                            valueChart = 4;
-                            break;
-                        case "Very bright":
-                            valueChart = 5;
-                            break;
+                if(i < date.size()) {
+                    if (!values.get(i).isEmpty()) {
+                        switch (values.get(i)) {
+                            case "Dark":
+                                valueChart = 1;
+                                break;
+                            case "Dim":
+                                valueChart = 2;
+                                break;
+                            case "Light":
+                                valueChart = 3;
+                                break;
+                            case "Bright":
+                                valueChart = 4;
+                                break;
+                            case "Very bright":
+                                valueChart = 5;
+                                break;
 
+                        }
+                    } else {
+                        valueChart = -9999;
                     }
-                }else {
-                    valueChart = -9999;
+                    if (valueChart >= 0) {
+                        group1.add(new BarEntry((float) valueChart, i));
+                    }
                 }
-                if (valueChart >= 0) {
-                    group1.add(new BarEntry((float) valueChart, i));
-                }
-
             }
         }
 
@@ -684,12 +686,15 @@ public class sensorData extends AppCompatActivity {
             ArrayList <String> date =  getArguments().getStringArrayList("date");
 
             for(int i=startlength; i<=length; i++){
-                if(!Double.isNaN(values[i]) && date.get(i) != null){
+                if(i < date.size()) {
+                    if (!Double.isNaN(values[i]) && date.get(i) != null) {
 
-                    if(values[i] < 0){
-                        auxItens.add("" + date.get(i) + "                        " + "Unavailable data");
-                    }else {
-                        auxItens.add("" + date.get(i) + "                                    " + values[i] + unit);
+                        if (values[i] < 0) {
+                            auxItens.add("" + date.get(i) + "                        " + "Unavailable data");
+                        } else {
+                            auxItens.add("" + date.get(i) + "                                    " + values[i] + unit);
+                        }
+
                     }
                 }
             }
@@ -702,19 +707,21 @@ public class sensorData extends AppCompatActivity {
             ArrayList<String>  values = getArguments().getStringArrayList(sensor);
             ArrayList <String> date =  getArguments().getStringArrayList("date");
             String value = null;
-            for(int i=startlength; i<=length; i++){
-                if(!values.get(i).isEmpty()){
-                 value = values.get(i);
-                }
-                if(value!= null && date.get(i) != null){
+            for(int i= startlength; i<=length; i++){
 
-                    if(value.contains("-9999")){
-                        auxItens.add("" + date.get(i) + "                        " + "Unavailable data");
-                    }else {
-                        auxItens.add("" + date.get(i) + "                                    " + value + unit);
+                if(i < date.size()) {
+                    if(!values.get(i).isEmpty()){
+                        value = values.get(i);
+                    }
+                    if (value != null && date.get(i) != null) {
+
+                        if (value.contains("-9999")) {
+                            auxItens.add("" + date.get(i) + "                        " + "Unavailable data");
+                        } else {
+                            auxItens.add("" + date.get(i) + "                                    " + value + unit);
+                        }
                     }
                 }
-
             }
 
         }
@@ -743,10 +750,7 @@ public class sensorData extends AppCompatActivity {
                 labels.add("14:00");
                 labels.add("15:00");
                 labels.add("16:00");
-                labels.add("17:00");
-                labels.add("18:00");
-                labels.add("19:00");
-                labels.add("20:00");
+
 
             }
             return labels;

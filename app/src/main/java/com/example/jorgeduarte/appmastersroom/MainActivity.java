@@ -232,27 +232,24 @@ public class MainActivity extends AppCompatActivity {
         Button buttonPressur = (Button) findViewById(R.id.buttonPressur);
         Button buttonHumidity = (Button) findViewById(R.id.buttonHumidity);
 
-        switch (ArduinoBright){
-            case "Dark":
-                buttonBrightness.setBackgroundResource(R.drawable.brightness_dark);
-                backgroundBrightnes = "brightness_dark";
-                break;
-            case "Dim":
+        String aux_ArduinoBright = ArduinoBright.toLowerCase();
+
+        if(aux_ArduinoBright.contains("dark")) {
+            buttonBrightness.setBackgroundResource(R.drawable.brightness_dark);
+            backgroundBrightnes = "brightness_dark";
+        }else if(aux_ArduinoBright.contains("dim")) {
                 buttonBrightness.setBackgroundResource(R.drawable.brightness_dim);
                 backgroundBrightnes = "brightness_dim";
-                break;
-            case "Light":
-                buttonBrightness.setBackgroundResource(R.drawable.brightness_light);
-                backgroundBrightnes = "brightness_light";
-                break;
-            case "Bright":
-                buttonBrightness.setBackgroundResource(R.drawable.brightness_bright);
-                backgroundBrightnes = "brightness_bright";
-                break;
-            case "Very bright":
+        }else if(aux_ArduinoBright.contains("light")) {
+            buttonBrightness.setBackgroundResource(R.drawable.brightness_light);
+            backgroundBrightnes = "brightness_light";
+        }else if(aux_ArduinoBright.contains("bright")) {
+            buttonBrightness.setBackgroundResource(R.drawable.brightness_bright);
+            backgroundBrightnes = "brightness_bright";
+        }else if(aux_ArduinoBright.contains("very bright")) {
                 buttonBrightness.setBackgroundResource(R.drawable.brightness_verybright);
                 backgroundBrightnes = "brightness_verybright";
-                break;
+
         }
 
         if (ArduinoTemperature < 5)
@@ -300,10 +297,11 @@ public class MainActivity extends AppCompatActivity {
             buttonThermometer.setBackgroundResource(R.drawable.thermometer_40_45);
             backgroundTemperature = "thermometer_40_45";
         }
-        else if (ArduinoTemperature >= 45)
-        {
+        else if (ArduinoTemperature >= 45) {
             buttonThermometer.setBackgroundResource(R.drawable.thermometer_45_50);
             backgroundTemperature = "thermometer_45_50";
+        } else {
+
         }
 
         if (speedWifi <2){
