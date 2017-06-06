@@ -27,10 +27,15 @@ public class HttpHandler { //add
 
     public String makeServiceCall(String reqUrl, String requestMethod) {
         String response = null;
+
+
+
         try {
             URL url = new URL(reqUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod(requestMethod);
+
+
             // read the response
             InputStream in = new BufferedInputStream(conn.getInputStream());
             response = convertStreamToString(in);
@@ -47,13 +52,14 @@ public class HttpHandler { //add
     }
 
     private String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        BufferedReader reader = null;
         StringBuilder sb = new StringBuilder();
 
         String line;
         try {
+            reader = new BufferedReader(new InputStreamReader(is));
             while ((line = reader.readLine()) != null) {
-                sb.append(line).append('\n');
+                sb.append(line);
             }
         } catch (IOException e) {
             e.printStackTrace();

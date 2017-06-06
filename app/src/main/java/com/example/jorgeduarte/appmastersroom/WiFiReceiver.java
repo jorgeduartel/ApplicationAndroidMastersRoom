@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.app.Notification;
@@ -39,24 +40,36 @@ class WifiReceiver extends BroadcastReceiver {
     private volatile Thread verifyNoise;
     private static String url = com.example.jorgeduarte.appmastersroom.url.getUrl();
 
+
     @Override
     public void onReceive(Context context, Intent intent) {
 
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-        String name = wifiInfo.getSSID();
+        String name = wifiInfo.getSSID().toLowerCase();
         int rssi = wifiInfo.getRssi();
 
-        if (name.contains("e-MEI")) {
+        if (name.contains("wifi")) {
 
             speed = wifiInfo.getLinkSpeed();
-            Log.d("WifiReceiver", "Don't have Wi-Fi connection" + name + "  speed" + speed);
+            Log.d("WifiReceiver", "Don't have Wi-Fi connection" + name);
+
 
             checkSpeedWifi(context);
             sendNotification(context);
-            start();
+
+
+
+            /*start();
+            while (noise<0) {
+              double s =  getAmplitude();
+                Log.d("Noise","  Noise" + noise);
+
+            }
+            stop();*/
+
             new GetData().execute();
-            noise = getAmplitude();
+
         }
     }
 
@@ -86,16 +99,14 @@ class WifiReceiver extends BroadcastReceiver {
         }
     }
 
+
     public double getAmplitude() {
         if (recorder != null) {
-            int i = 0;
+
+
             int amplitude = recorder.getMaxAmplitude();
             amplitudeDb = 20 * Math.log10((double) Math.abs(amplitude));
-            while(amplitudeDb<0 || i <40){
-                amplitude = recorder.getMaxAmplitude();
-                amplitudeDb = 20 * Math.log10((double) Math.abs(amplitude));
-                i++;
-            }
+
             if(amplitudeDb>=0) {
                 amplitudeDbF =  amplitudeDb;
                 noise = amplitudeDb;
@@ -105,8 +116,11 @@ class WifiReceiver extends BroadcastReceiver {
             }
         }
         else
-            return 0;
+            return -9999;
     }
+
+
+
 
     public void sendNotification(Context context){
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

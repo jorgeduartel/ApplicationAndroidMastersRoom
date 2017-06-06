@@ -44,6 +44,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -81,7 +82,7 @@ public class sensorData extends AppCompatActivity {
 
 
     private static String url = com.example.jorgeduarte.appmastersroom.url.getUrl()+"getDate/";
-    private static String url2= com.example.jorgeduarte.appmastersroom.url.getUrl()+"getday/3";
+    private static String url2= com.example.jorgeduarte.appmastersroom.url.getUrl()+"getday/0";
     private String TAG = sensorData.class.getSimpleName();
     private ProgressDialog pDialog;
 
@@ -223,22 +224,25 @@ public class sensorData extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... arg0) {
             HttpHandler sh = new HttpHandler();
+            HttpHandler sh2 = new HttpHandler();
 
             // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall(url+"0" , "GET");
             String jsonStr1 = sh.makeServiceCall(url+"1" , "GET");
+            String jsonStr = sh.makeServiceCall(url+"0" , "GET");
             String jsonStr2 = sh.makeServiceCall(url+"2" , "GET");
             String jsonStr3 = sh.makeServiceCall(url+"3" , "GET");
             String jsonStr4 = sh.makeServiceCall(url+"4" , "GET");
             String jsonStr5 = sh.makeServiceCall(url+"5" , "GET");
             String jsonStr6 = sh.makeServiceCall(url+"6" , "GET");
+            String jsonStr7 = sh.makeServiceCall(url2 , "GET");
 
-            //String jsonStr7 = sh.makeServiceCall(url2 , "GET");
 
-            Log.e(TAG, "Response from url: " + jsonStr);
 
-            if (jsonStr != null && jsonStr1 != null && jsonStr2 != null) {
+            Log.e(TAG, "Response from url: " + jsonStr7);
+
+            if (jsonStr7 != null) {
                 try {
+
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     JSONObject jsonObj1 = new JSONObject(jsonStr1);
                     JSONObject jsonObj2 = new JSONObject(jsonStr2);
@@ -246,8 +250,8 @@ public class sensorData extends AppCompatActivity {
                     JSONObject jsonObj4 = new JSONObject(jsonStr4);
                     JSONObject jsonObj5 = new JSONObject(jsonStr5);
                     JSONObject jsonObj6 = new JSONObject(jsonStr6);
-                    //JSONObject jsonObj7 = new JSONObject(jsonStr7);
-
+                    JSONObject jsonObj7 = new JSONObject(jsonStr7);
+                    JSONArray values = jsonObj7.getJSONArray("values");
                     //people =  jsonObj.getString("people");
 
                     date.add(0, jsonObj.getString("date1"));
@@ -314,6 +318,24 @@ public class sensorData extends AppCompatActivity {
                     wifiSpeed[5] = jsonObj5.getDouble("wifiAverage");
                     wifiSpeed[6] = jsonObj6.getDouble("wifiAverage");
 
+                    for (int i = 0; i < values.length(); i++) {
+                        JSONObject value = values.getJSONObject(i);
+                        Log.e(TAG, "Response value: " + (i+7));
+                        humidity[(i+7)] = value.getDouble("humidity");
+                        temperature[(i+7)] = value.getDouble("rpTemperature");
+                        wifiSpeed[(i+7)] = value.getDouble("wifiQuality");
+                        noise[(i+7)] = value.getDouble("noise");
+                        people[(i+7)] = value.getDouble("nPessoas");
+                        pressure[(i+7)] = value.getDouble("pressure");
+                        date.add((i+7), value.getString("hour"));
+
+                    }
+
+
+
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container, PlaceholderFragment.newInstance(position, nameBackground,sensor, type, value, brightness2, date, humidity, temperature, pressure, people, noise, wifiSpeed))
+                            .commit();
 
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -436,76 +458,80 @@ public class sensorData extends AppCompatActivity {
                 switch (sensor) {
                     case "Temperature":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " ºC", 6);
+                            getData(sensor, " ºC",0, 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " ºC", 2);
+                            getData(sensor, " ºC",0, 2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " ºC", 0);
+                            getData(sensor, " ºC", 7,19);
                         }
                         break;
                     case "Brightness":
-                        for (String value: getArguments().getStringArrayList(sensor)) {
-                            for (String date: getArguments().getStringArrayList("date")) {
-
-                                auxItens.add(""+date +"                                    "+value);
-                            }
-                        }
-                    case "Wi-Fi network speed":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " Mb/s", 6);
+                            getDataString(sensor, "",0, 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " Mb/s", 2);
+                            getDataString(sensor, "",0, 2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " Mb/s", 0);
+                            getDataString(sensor, "",7, 19);
+                        }
+                        break;
+                    case "Wi-Fi network speed":
+                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
+                            getData(sensor, " Mb/s",0, 6);
+                        }else
+                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
+                            getData(sensor, " Mb/s",0, 2);
+                        }else
+                        if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
+                            getData(sensor, " Mb/s",7, 19);
                         }
                         break;
                     case "Noise":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " dB", 6);
+                            getData(sensor, " dB",0, 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " dB", 2);
+                            getData(sensor, " dB", 0,2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " dB", 0);
+                            getData(sensor, " dB",7, 19);
                         }
                         break;
                     case "Number of people":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " un", 6);
+                            getData(sensor, " un",0, 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " un", 2);
+                            getData(sensor, " un",0, 2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " un", 0);
+                            getData(sensor, " un",7, 19);
                         }
                         break;
                     case "Humidity":
 
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " %", 6);
+                            getData(sensor, " %",0, 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " %", 2);
+                            getData(sensor, " %",0, 2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " %", 0);
+                            getData(sensor, " %",7, 19);
                         }
                         break;
                     case "Pressure":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " hPa", 6);
+                            getData(sensor, " hPa",0, 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " hPa", 2);
+                            getData(sensor, " hPa",0, 2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " hPa", 0);
+                            getData(sensor, " hPa",7, 19);
                         }
                         break;
                 }
@@ -538,38 +564,33 @@ public class sensorData extends AppCompatActivity {
                 if(getArguments().getDoubleArray("Temperature")[0] > 0) {
 
                     if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
-                        double values[] = getArguments().getDoubleArray(sensor);
-
-                        for (int i = 0; i <= 6; i++) {
-
-                            if (values[i] >= 0) {
-                                group1.add(new BarEntry((float) values[i], i));
-                            }
+                        if(sensor.contains("Brightness")){
+                            getDataChartString(group1, sensor, "",0, 6);
+                        }
+                        else {
+                            getDataChart(group1,sensor, "",0, 6);
                         }
 
                     } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
 
-                        double values[] = getArguments().getDoubleArray(sensor);
-                        for (int i = 0; i <= 2; i++) {
-
-                            if (values[i] >= 0) {
-                                group1.add(new BarEntry((float) values[i], i));
-                            }
-
+                        if(sensor.contains("Brightness")){
+                            getDataChartString(group1,sensor, "",0, 2);
                         }
+                        else {
+                            getDataChart(group1, sensor, "",0, 2);
+                        }
+
                     } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 3) {
-                        double values[] = getArguments().getDoubleArray(sensor);
-                        for (int i = 0; i <= 2; i++) {
-
-                            if (values[i] >= 0) {
-                                group1.add(new BarEntry((float) values[i], i));
-                            }
-
+                        if(sensor.contains("Brightness")){
+                            getDataChartString(group1, sensor, "",7,19);
+                        }
+                        else {
+                            getDataChart(group1, sensor, "",13,15);
                         }
                     }
 
-                    BarDataSet barDataSet1 = new BarDataSet(group1, "Group 1");
-                    //barDataSet1.setColor(Color.rgb(0, 155, 0));
+                    BarDataSet barDataSet1 = new BarDataSet(group1, sensor);
+
                     barDataSet1.setColors(ColorTemplate.COLORFUL_COLORS);
 
 
@@ -605,10 +626,64 @@ public class sensorData extends AppCompatActivity {
             return context.getResources().getDrawable(resourceId);
         }
 
-        public void getData(String sensor, String unit, int length) {
+        public void getDataChart(ArrayList<BarEntry> group1, String sensor, String unit, int startlength, int length) {
+
+
+            double values[] = getArguments().getDoubleArray(sensor);
+            for (int i = startlength; i <= length; i++) {
+
+                if (values[i] >= 0) {
+                    group1.add(new BarEntry((float) values[i], i));
+                }
+
+            }
+
+
+        }
+
+        public void getDataChartString(ArrayList<BarEntry> group1, String sensor, String unit, int startlength, int length) {
+
+
+            ArrayList<String>  values = getArguments().getStringArrayList(sensor);
+            ArrayList <String> date =  getArguments().getStringArrayList("date");
+
+            float valueChart = -9999;
+            for(int i=startlength; i<=length; i++){
+                if(!values.get(i).isEmpty()){
+                    switch (values.get(i))
+                    {
+                        case "Dark":
+                            valueChart = 1;
+                            break;
+                        case "Dim":
+                            valueChart = 2;
+                            break;
+                        case "Light":
+                            valueChart = 3;
+                            break;
+                        case "Bright":
+                            valueChart = 4;
+                            break;
+                        case "Very bright":
+                            valueChart = 5;
+                            break;
+
+                    }
+                }else {
+                    valueChart = -9999;
+                }
+                if (valueChart >= 0) {
+                    group1.add(new BarEntry((float) valueChart, i));
+                }
+
+            }
+        }
+
+        public void getData(String sensor, String unit, int startlength, int length) {
             double values[] = getArguments().getDoubleArray(sensor);
             ArrayList <String> date =  getArguments().getStringArrayList("date");
-            for(int i=0; i<=length; i++){
+
+            for(int i=startlength; i<=length; i++){
                 if(!Double.isNaN(values[i]) && date.get(i) != null){
 
                     if(values[i] < 0){
@@ -617,6 +692,29 @@ public class sensorData extends AppCompatActivity {
                         auxItens.add("" + date.get(i) + "                                    " + values[i] + unit);
                     }
                 }
+            }
+
+        }
+
+
+
+        public void getDataString(String sensor, String unit, int startlength, int length) {
+            ArrayList<String>  values = getArguments().getStringArrayList(sensor);
+            ArrayList <String> date =  getArguments().getStringArrayList("date");
+            String value = null;
+            for(int i=startlength; i<=length; i++){
+                if(!values.get(i).isEmpty()){
+                 value = values.get(i);
+                }
+                if(value!= null && date.get(i) != null){
+
+                    if(value.contains("-9999")){
+                        auxItens.add("" + date.get(i) + "                        " + "Unavailable data");
+                    }else {
+                        auxItens.add("" + date.get(i) + "                                    " + value + unit);
+                    }
+                }
+
             }
 
         }
@@ -637,9 +735,19 @@ public class sensorData extends AppCompatActivity {
                 labels.add("Yesterday");
                 labels.add("Today");
             }else if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                labels.add("Before yesterday");
-                labels.add("Yesterday");
-                labels.add("Today");
+                labels.add("8:00");
+                labels.add("10:00");
+                labels.add("11:00");
+                labels.add("12:00");
+                labels.add("13:00");
+                labels.add("14:00");
+                labels.add("15:00");
+                labels.add("16:00");
+                labels.add("17:00");
+                labels.add("18:00");
+                labels.add("19:00");
+                labels.add("20:00");
+
             }
             return labels;
         }

@@ -33,15 +33,15 @@ public class MainActivity extends AppCompatActivity {
     private String TAG = MainActivity.class.getSimpleName();
     private ProgressDialog pDialog;
     private ListView lv;
-    private String ArduinoBright = "Bright";
-    private double ArduinoTemperature = 35;
-    private double humidity= 2.551124572753906;
-    private double pressure = 102.260498046875;
+    private String ArduinoBright = "-9999";
+    private double ArduinoTemperature = -9999;
+    private double humidity= -9999;
+    private double pressure = -9999;
     private String temperature;
     private Context context;
-    private int people = 15;
-    private int speedWifi;
-    private double noise = 7;
+    private int people = -9999;
+    private int speedWifi = -9999;
+    private double noise = -9999;
     private String backgroundTemperature;
     private String backgroundBrightnes;
     private String backgroundSpeedWifi;
@@ -72,24 +72,7 @@ public class MainActivity extends AppCompatActivity {
             window.setStatusBarColor(this.getResources().getColor(R.color.gray));
         }
 
-        /*WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
-        int numberOfLevels = 5;
-        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
 
-        int level = WifiManager.calculateSignalLevel(wifiInfo.getRssi(), numberOfLevels);
-        Log.e(TAG, "Wifi: " + level);*/
-
-
-       /* GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(this));
-
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                Log.e(TAG, "ArduinoBright: " + ArduinoBright);
-
-            }
-        });*/
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -114,22 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
         new GetData().execute();
 
-        recorder = new MediaRecorder();
 
-        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        recorder.setOutputFile("/dev/null");
-        try {
-            recorder.prepare();
-            recorder.start();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        verifyNoiseThread();
 
         update();
 
@@ -244,29 +212,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void verifyNoiseThread(){
-        this.verifyNoise = new Thread(new Runnable() {
-            @Override
-            public void run () {
-                while(true){
-                    try {
-                        int amplitude = recorder.getMaxAmplitude();
-                        amplitudeDb = 20 * Math.log10((double) Math.abs(amplitude));
-                        if(amplitudeDb>=0) {
-                            amplitudeDbF =  amplitudeDb;
-                            noise = amplitudeDb;
-                        }
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
 
-        });
-
-        verifyNoise.start();
-    }
 
 
     public void update(){
@@ -403,13 +349,49 @@ public class MainActivity extends AppCompatActivity {
         backgroundPressur = "pressure";
         backgroundHumidity = "airhumidity";
 
-        brightOutput.setText(ArduinoBright);
-        temperatureOutput.setText((ArduinoTemperature+" ºC"));
-        humidityOutput.setText((humidity+" %"));
-        pressureOutput.setText((pressureInt+" hPa"));
-        speedWifiOutput.setText((Integer.toString(speedWifi)+" Mb/s"));
-        noiseOutput.setText(noise+" dB");
-        peopleOutput.setText(people+" un");
+        if(ArduinoBright.contains("-9999")) {
+            brightOutput.setText("Unavailable");
+        }
+        else{
+            brightOutput.setText(ArduinoBright);
+        }
+
+        if(ArduinoTemperature > -9999) {
+            temperatureOutput.setText((ArduinoTemperature + " ºC"));
+        }
+        else{
+            temperatureOutput.setText("Unavailable");
+        }
+
+        if(humidity > -9999) {
+            humidityOutput.setText((humidity + " %"));
+        }else{
+            humidityOutput.setText("Unavailable");
+        }
+
+        if(pressureInt > -9999) {
+            pressureOutput.setText((pressureInt+" hPa"));
+        }else{
+            pressureOutput.setText("Unavailable");
+        }
+
+        if(speedWifi > -9999) {
+            speedWifiOutput.setText((Integer.toString(speedWifi) + " Mb/s"));
+        }else{
+            speedWifiOutput.setText("Unavailable");
+        }
+
+        if(noise > -9999) {
+            noiseOutput.setText(noise + " dB");
+        }else {
+            noiseOutput.setText("Unavailable");
+        }
+
+        if(people > -9999) {
+            peopleOutput.setText(people + " un");
+        }else {
+            peopleOutput.setText("Unavailable");
+        }
     }
 
     public void sensorFactory(View view){
