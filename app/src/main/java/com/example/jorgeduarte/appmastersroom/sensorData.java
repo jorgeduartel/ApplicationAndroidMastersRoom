@@ -434,80 +434,80 @@ public class sensorData extends AppCompatActivity {
                 switch (sensor) {
                     case "Temperature":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " ºC",0, 6);
+                            getData(sensor, " ºC", 0, 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " ºC",0, 2);
+                            getData(sensor, " ºC", 0, 2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " ºC", 7,19);
+                            getData(sensor, " ºC", 7, 19);
                         }
                         break;
                     case "Brightness":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getDataString(sensor, "",0, 6);
+                            getDataString(sensor, "", 0, 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getDataString(sensor, "",0, 2);
+                            getDataString(sensor, "", 0, 2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getDataString(sensor, "",7, 19);
+                            getDataString(sensor, "", 7, 19);
                         }
                         break;
                     case "Wi-Fi network speed":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " Mb/s",0, 6);
+                            getData(sensor, " Mb/s", 0, 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " Mb/s",0, 2);
+                            getData(sensor, " Mb/s", 0, 2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " Mb/s",7, 19);
+                            getData(sensor, " Mb/s", 7, 19);
                         }
                         break;
                     case "Noise":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " dB",0, 6);
+                            getData(sensor, " dB", 0, 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " dB", 0,2);
+                            getData(sensor, " dB", 0, 2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " dB",7, 19);
+                            getData(sensor, " dB", 7, 19);
                         }
                         break;
                     case "Number of people":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " un",0, 6);
+                            getData(sensor, " people", 0, 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " un",0, 2);
+                            getData(sensor, " people", 0, 2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " un",7, 19);
+                            getData(sensor, " people", 7, 19);
                         }
                         break;
                     case "Humidity":
 
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " %",0, 6);
+                            getData(sensor, " %", 0, 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " %",0, 2);
+                            getData(sensor, " %", 0, 2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " %",7, 19);
+                            getData(sensor, " %", 7, 19);
                         }
                         break;
                     case "Pressure":
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                            getData(sensor, " hPa",0, 6);
+                            getData(sensor, " hPa", 0, 6);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                            getData(sensor, " hPa",0, 2);
+                            getData(sensor, " hPa", 0, 2);
                         }else
                         if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                            getData(sensor, " hPa",7, 19);
+                            getData(sensor, " hPa", 7, 19);
                         }
                         break;
                 }
