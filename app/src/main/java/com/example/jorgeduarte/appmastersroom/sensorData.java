@@ -2,15 +2,8 @@ package com.example.jorgeduarte.appmastersroom;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.AsyncTask;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -27,7 +20,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -48,38 +40,24 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import static android.R.attr.x;
-import static android.R.attr.y;
-import static com.example.jorgeduarte.appmastersroom.R.id.imageView;
 
 public class sensorData extends AppCompatActivity {
 
     public String sensor;
     public ArrayList<String> auxItens =  new ArrayList(); // array aux
     public String nameBackground;
-    public ListView listView;
-    private ArrayList<String> arrayList;
-    private ArrayAdapter<String> adapter;
     private int type;
     private int position;
     private String value;
-    private String[] brightness;
-   // private double humidity= 2.551124572753906;
-   // private double pressure = 102.260498046875;
-    //private ArrayList <Double> temperature;
-    private ArrayList <String> brightness2 =  new ArrayList();
-    private ArrayList <String> date =  new ArrayList();
-    private double humidity[] =  new double[20];
-    private double temperature[] =  new double[20];
-    private double pressure[] =  new double[20];
-    private double people[] =  new double[20];
-    private double noise[] =  new double[20];
-    private double wifiSpeed[] =  new double[20];
-
-
+    private ArrayList <String> brightness = new ArrayList();
+    private ArrayList <String> date = new ArrayList();
+    private double humidity[] = new double[20];
+    private double temperature[] = new double[20];
+    private double pressure[] = new double[20];
+    private double people[] = new double[20];
+    private double noise[] = new double[20];
+    private double wifiSpeed[] = new double[20];
 
     private static String url = com.example.jorgeduarte.appmastersroom.url.getUrl()+"getDate/";
     private static String url2= com.example.jorgeduarte.appmastersroom.url.getUrl()+"getday/0";
@@ -114,6 +92,7 @@ public class sensorData extends AppCompatActivity {
                         sensor+" (Last three days)",
                         sensor+" (Today)",
                 }));
+        spinner.setSelection(2); // Para predefinir o spinner no dia "hoje"
 
         spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
@@ -122,7 +101,7 @@ public class sensorData extends AppCompatActivity {
                 // container view.
                 position = positionS+1;
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, PlaceholderFragment.newInstance(positionS + 1, nameBackground, sensor, type, value, brightness2, date, humidity, temperature, pressure, people, noise, wifiSpeed))
+                        .replace(R.id.container, PlaceholderFragment.newInstance(positionS + 1, nameBackground, sensor, type, value, brightness, date, humidity, temperature, pressure, people, noise, wifiSpeed))
                         .commit();
             }
 
@@ -130,8 +109,6 @@ public class sensorData extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-
 
         if (android.os.Build.VERSION.SDK_INT >= 21) { // Jorge
             Window window = this.getWindow();
@@ -163,14 +140,14 @@ public class sensorData extends AppCompatActivity {
 
                 type = 1;
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, PlaceholderFragment.newInstance(position, nameBackground,sensor, type, value, brightness2, date, humidity, temperature, pressure, people, noise, wifiSpeed))
+                        .replace(R.id.container, PlaceholderFragment.newInstance(position, nameBackground,sensor, type, value, brightness, date, humidity, temperature, pressure, people, noise, wifiSpeed))
                         .commit();
 
             }else {
                 item.setIcon(R.drawable.chart);
                 type = 0;
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, PlaceholderFragment.newInstance(position, nameBackground,sensor, type, value, brightness2, date, humidity, temperature, pressure, people, noise, wifiSpeed))
+                        .replace(R.id.container, PlaceholderFragment.newInstance(position, nameBackground,sensor, type, value, brightness, date, humidity, temperature, pressure, people, noise, wifiSpeed))
                         .commit();
 
             }
@@ -262,13 +239,13 @@ public class sensorData extends AppCompatActivity {
                     date.add(5, jsonObj5.getString("date1"));
                     date.add(6, jsonObj6.getString("date1"));
 
-                    brightness2.add(0, jsonObj.getString("brightAverage"));
-                    brightness2.add(1, jsonObj1.getString("brightAverage"));
-                    brightness2.add(2, jsonObj2.getString("brightAverage"));
-                    brightness2.add(3, jsonObj3.getString("brightAverage"));
-                    brightness2.add(4, jsonObj4.getString("brightAverage"));
-                    brightness2.add(5, jsonObj5.getString("brightAverage"));
-                    brightness2.add(6, jsonObj6.getString("brightAverage"));
+                    brightness.add(0, jsonObj.getString("brightAverage"));
+                    brightness.add(1, jsonObj1.getString("brightAverage"));
+                    brightness.add(2, jsonObj2.getString("brightAverage"));
+                    brightness.add(3, jsonObj3.getString("brightAverage"));
+                    brightness.add(4, jsonObj4.getString("brightAverage"));
+                    brightness.add(5, jsonObj5.getString("brightAverage"));
+                    brightness.add(6, jsonObj6.getString("brightAverage"));
 
                     humidity[0] = jsonObj.getDouble("humidityAverage");
                     humidity[1] = jsonObj1.getDouble("humidityAverage");
@@ -327,7 +304,7 @@ public class sensorData extends AppCompatActivity {
                         noise[(i+7)] = value.getDouble("noise");
                         people[(i+7)] = value.getDouble("nPessoas");
                         pressure[(i+7)] = value.getDouble("pressure");
-                        brightness2.add((i+7), value.getString("arduinoBrightValue"));
+                        brightness.add((i+7), value.getString("arduinoBrightValue"));
                         date.add((i+7), value.getString("hour"));
 
                     }
@@ -335,7 +312,7 @@ public class sensorData extends AppCompatActivity {
 
 
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container, PlaceholderFragment.newInstance(position, nameBackground,sensor, type, value, brightness2, date, humidity, temperature, pressure, people, noise, wifiSpeed))
+                            .replace(R.id.container, PlaceholderFragment.newInstance(position, nameBackground,sensor, type, value, brightness, date, humidity, temperature, pressure, people, noise, wifiSpeed))
                             .commit();
 
                 } catch (final JSONException e) {

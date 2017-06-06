@@ -1,19 +1,14 @@
 package com.example.jorgeduarte.appmastersroom;
 
-import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +23,6 @@ public class Activity_PeopleRoom extends AppCompatActivity {
     private static String baseUrl = com.example.jorgeduarte.appmastersroom.url.getUrl()+"sendPeople/";
     private static String url;
     private ProgressDialog pDialog;
-    private int people;
     private String response;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +42,7 @@ public class Activity_PeopleRoom extends AppCompatActivity {
                 url = baseUrl+fab.getText().toString();
                 Log.e(TAG, "URL: " + url);
 
-                 new GetData().execute(); // Quando servidor esta a funcionar
+                 new GetData().execute(); // Quando servidor está a funcionar
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }
         });
@@ -129,9 +123,9 @@ public class Activity_PeopleRoom extends AppCompatActivity {
             // Dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
-            /**
-             * Updating parsed JSON data into ListView
-             * */
+            /*
+              Updating parsed JSON data into ListView
+              */
         }
     }
 }

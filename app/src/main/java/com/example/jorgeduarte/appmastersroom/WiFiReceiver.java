@@ -1,33 +1,21 @@
 package com.example.jorgeduarte.appmastersroom;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaRecorder;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-
-/**
- * Created by jorgeduarte on 06/05/17.
- */
 
 class WifiReceiver extends BroadcastReceiver {
 
@@ -36,8 +24,6 @@ class WifiReceiver extends BroadcastReceiver {
     private MediaRecorder recorder;
     private double noise = -9999;
     private int speed  = -9999;
-    private ProgressDialog pDialog;
-    private volatile Thread verifyNoise;
     private static String url = com.example.jorgeduarte.appmastersroom.url.getUrl();
 
 
@@ -189,7 +175,7 @@ class WifiReceiver extends BroadcastReceiver {
             super.onPostExecute(result);
             // Dismiss the progress dialog
 
-            /**
+            /*
              * Updating parsed JSON data into ListView
              * */
         }
