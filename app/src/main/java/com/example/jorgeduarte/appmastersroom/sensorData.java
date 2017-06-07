@@ -451,7 +451,7 @@ public class sensorData extends AppCompatActivity
                 TextView textView2 = new TextView(getActivity().getApplicationContext());
                 textView2.setText("      Date                                                                     Value");
 
-                if(getArguments().getDoubleArray("Temperature")[0] > 0 )
+                if(getArguments().getDoubleArray("Temperature")[1] > 0 )
                 {
 
                     switch (sensor) {
@@ -567,7 +567,7 @@ public class sensorData extends AppCompatActivity
 
                 ArrayList<BarEntry> group1 = new ArrayList<>();
 
-                if(getArguments().getDoubleArray("Temperature")[0] > 0) {
+                if(getArguments().getDoubleArray("Temperature")[1] > 0) {
 
                     if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
                         if(sensor.contains("Brightness")){
