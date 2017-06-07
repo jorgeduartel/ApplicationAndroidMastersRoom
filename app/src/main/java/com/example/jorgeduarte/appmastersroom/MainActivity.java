@@ -310,12 +310,12 @@ public class MainActivity extends AppCompatActivity
             buttonNoise.setBackgroundResource(R.drawable.noise_green);
             backgroundNoise = "noise_green";
         }
-        else if (noise > 2 && noise < 11)
+        else if (noise > 2 && noise < 10)
         {
             buttonNoise.setBackgroundResource(R.drawable.noise_orange);
             backgroundNoise = "noise_orange";
         }
-        else if (noise > 10 )
+        else if (noise >= 10 )
         {
             buttonNoise.setBackgroundResource(R.drawable.noise_red);
             backgroundNoise = "noise_red";
