@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity
     private int speedWifi = -9999;
     private double noise = -9999;
     private String backgroundTemperature;
-    private String backgroundBrightnes;
+    private String backgroundBrightness;
     private String backgroundSpeedWifi;
     private String backgroundNoise;
     private String backgroundPeople;
@@ -61,14 +60,11 @@ public class MainActivity extends AppCompatActivity
             window.setStatusBarColor(this.getResources().getColor(R.color.gray));
         }
 
-
-
         Button buttonSettings = (Button) findViewById(R.id.buttonSettings);
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),MainActivityChart.class));
-
             }
         });
 
@@ -82,8 +78,6 @@ public class MainActivity extends AppCompatActivity
         NotificationManager notificationmgr = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         Intent intent = new Intent(this, Activity_PeopleRoom.class);
         PendingIntent pintent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
-
-        //   PendingIntent pintent = PendingIntent.getActivities(this,(int)System.currentTimeMillis(),intent, 0);
 
         Notification notif = new Notification.Builder(this)
                 .setSmallIcon(R.drawable.team)
@@ -177,7 +171,7 @@ public class MainActivity extends AppCompatActivity
             // Dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
-            /**
+            /*
              * Updating parsed JSON data into ListView
              * */
         }
@@ -205,32 +199,32 @@ public class MainActivity extends AppCompatActivity
         if(aux_ArduinoBright.contains("dark"))
         {
             buttonBrightness.setBackgroundResource(R.drawable.brightness_dark);
-            backgroundBrightnes = "brightness_dark";
+            backgroundBrightness = "brightness_dark";
         }
         else if(aux_ArduinoBright.contains("dim"))
         {
             buttonBrightness.setBackgroundResource(R.drawable.brightness_dim);
-            backgroundBrightnes = "brightness_dim";
+            backgroundBrightness = "brightness_dim";
         }
         else if(aux_ArduinoBright.contains("light"))
         {
             buttonBrightness.setBackgroundResource(R.drawable.brightness_light);
-            backgroundBrightnes = "brightness_light";
+            backgroundBrightness = "brightness_light";
         }
         else if(aux_ArduinoBright.contains("bright"))
         {
             buttonBrightness.setBackgroundResource(R.drawable.brightness_bright);
-            backgroundBrightnes = "brightness_bright";
+            backgroundBrightness = "brightness_bright";
         }
         else if(aux_ArduinoBright.contains("very bright"))
         {
             buttonBrightness.setBackgroundResource(R.drawable.brightness_verybright);
-            backgroundBrightnes = "brightness_verybright";
+            backgroundBrightness = "brightness_verybright";
         }
         else
         {
             buttonBrightness.setBackgroundResource(R.drawable.brightness);
-            backgroundBrightnes = "brightness";
+            backgroundBrightness = "brightness";
         }
 
         if (ArduinoTemperature < 5)
@@ -284,52 +278,54 @@ public class MainActivity extends AppCompatActivity
             backgroundTemperature = "thermometer_45_50";
         }
 
-        if (speedWifi < 2)
+        if(speedWifi < 10)
         {
             buttonSpeedWifi.setBackgroundResource(R.drawable.wifi_red);
             backgroundSpeedWifi = "wifi_red";
         }
-        else if (speedWifi > 2 && speedWifi < 11)
+        else if(speedWifi >= 10 && speedWifi < 20)
         {
             buttonSpeedWifi.setBackgroundResource(R.drawable.wifi_orange);
             backgroundSpeedWifi = "wifi_orange";
         }
-        else if (speedWifi > 10 && speedWifi < 21)
+        else if(speedWifi >= 20 && speedWifi < 40)
         {
             buttonSpeedWifi.setBackgroundResource(R.drawable.wifi_yellow);
             backgroundSpeedWifi = "wifi_yellow";
         }
-        else if (speedWifi > 20)
+        else if(speedWifi >= 40)
         {
             buttonSpeedWifi.setBackgroundResource(R.drawable.wifi_green2);
             backgroundSpeedWifi = "wifi_green2";
         }
 
-        if (noise < 3)
+        if(noise < 30)
         {
             buttonNoise.setBackgroundResource(R.drawable.noise_green);
             backgroundNoise = "noise_green";
         }
-        else if (noise > 2 && noise < 10)
+        else if(noise >= 30 && noise < 60)
         {
             buttonNoise.setBackgroundResource(R.drawable.noise_orange);
             backgroundNoise = "noise_orange";
         }
-        else if (noise >= 10 )
+        else if(noise >= 60)
         {
             buttonNoise.setBackgroundResource(R.drawable.noise_red);
             backgroundNoise = "noise_red";
         }
 
-        if (people < 2)
+        if(people < 8)
         {
             buttonPeople.setBackgroundResource(R.drawable.people_green);
             backgroundPeople = "people_green";
-        }else if (people >= 2 && people < 11)
+        }
+        else if(people >= 8 && people < 15)
         {
             buttonPeople.setBackgroundResource(R.drawable.people_yellow);
             backgroundPeople = "people_yellow";
-        }else if (people > 10)
+        }
+        else if(people >= 15)
         {
             buttonPeople.setBackgroundResource(R.drawable.team);
             backgroundPeople = "team";
@@ -390,7 +386,7 @@ public class MainActivity extends AppCompatActivity
             buttonHumidity.setBackgroundResource(R.drawable.humidity3);
             backgroundHumidity = "humidity3";
         }
-        else if(humidity >= 75 && humidity < 100)
+        else if(humidity >= 75 && humidity <= 100)
         {
             buttonHumidity.setBackgroundResource(R.drawable.humidity4);
             backgroundHumidity = "humidity4";
@@ -425,7 +421,7 @@ public class MainActivity extends AppCompatActivity
 
         if(pressureInt >= 0)
         {
-            pressureOutput.setText((pressureInt+" hPa"));
+            pressureOutput.setText((pressureInt + " hPa"));
         }
         else
         {
@@ -473,7 +469,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Temperature").putExtra("background",  backgroundTemperature).putExtra("value", ArduinoTemperature + " ºC"));
                 break;
             case R.id.buttonBrightness:
-                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Brightness").putExtra("background",  backgroundBrightnes).putExtra("value", ArduinoBright));
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Brightness").putExtra("background",  backgroundBrightness).putExtra("value", ArduinoBright));
                 break;
             case R.id.buttonSpeedWifi:
                 startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Wi-Fi network speed").putExtra("background",  backgroundSpeedWifi).putExtra("value", (Integer.toString(speedWifi) + " Mb/s")));
