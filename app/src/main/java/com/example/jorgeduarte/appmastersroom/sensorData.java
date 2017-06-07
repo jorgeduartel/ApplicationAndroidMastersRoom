@@ -514,13 +514,13 @@ public class sensorData extends AppCompatActivity
                         case "Humidity":
 
                             if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                                getData(sensor, " %", 0, 6);
+                                getData(sensor, "%", 0, 6);
                             }else
                             if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                                getData(sensor, " %", 0, 2);
+                                getData(sensor, "%", 0, 2);
                             }else
                             if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                                getData(sensor, " %", 7, 19);
+                                getData(sensor, "%", 7, 19);
                             }
                             break;
                         case "Pressure":

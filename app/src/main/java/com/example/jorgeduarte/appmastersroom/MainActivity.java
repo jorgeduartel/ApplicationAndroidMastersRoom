@@ -77,10 +77,8 @@ public class MainActivity extends AppCompatActivity
         update();
     }
 
-
-
-    public void getnotification(){
-
+    public void getnotification()
+    {
         NotificationManager notificationmgr = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         Intent intent = new Intent(this, Activity_PeopleRoom.class);
         PendingIntent pintent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
@@ -90,10 +88,9 @@ public class MainActivity extends AppCompatActivity
         Notification notif = new Notification.Builder(this)
                 .setSmallIcon(R.drawable.team)
                 .setContentTitle("Study Room")
-                .setContentText("Please count the number of people in the room ")
+                .setContentText("Please count the number of people in the room.")
                 .setContentIntent(pintent)
                 .build();
-
 
         notificationmgr.notify(0,notif);
     }
@@ -408,7 +405,7 @@ public class MainActivity extends AppCompatActivity
             brightOutput.setText(ArduinoBright);
         }
 
-        if(ArduinoTemperature > 0)
+        if(ArduinoTemperature >= -50)
         {
             temperatureOutput.setText((ArduinoTemperature + " ºC"));
         }
@@ -417,16 +414,16 @@ public class MainActivity extends AppCompatActivity
             temperatureOutput.setText(UNAVAILABLE_DATA);
         }
 
-        if(humidity > 0)
+        if(humidity >= 0)
         {
-            humidityOutput.setText((humidity + " %"));
+            humidityOutput.setText((humidity + "%"));
         }
         else
         {
             humidityOutput.setText(UNAVAILABLE_DATA);
         }
 
-        if(pressureInt > 0)
+        if(pressureInt >= 0)
         {
             pressureOutput.setText((pressureInt+" hPa"));
         }
@@ -435,7 +432,7 @@ public class MainActivity extends AppCompatActivity
             pressureOutput.setText(UNAVAILABLE_DATA);
         }
 
-        if(speedWifi > 0)
+        if(speedWifi >= 0)
         {
             speedWifiOutput.setText((Integer.toString(speedWifi) + " Mb/s"));
         }
@@ -444,7 +441,7 @@ public class MainActivity extends AppCompatActivity
             speedWifiOutput.setText(UNAVAILABLE_DATA);
         }
 
-        if(noise > 0)
+        if(noise >= 0)
         {
             noiseOutput.setText(noise + "/" + MAXIMUM_NOISE_LEVEL + " dB");
         }
@@ -453,7 +450,7 @@ public class MainActivity extends AppCompatActivity
             noiseOutput.setText(UNAVAILABLE_DATA);
         }
 
-        if(people > 0)
+        if(people >= 0)
         {
             if(people == 1)
             {
@@ -473,13 +470,13 @@ public class MainActivity extends AppCompatActivity
     public void sensorFactory(View view){
         switch (view.getId()) {
             case R.id.buttonThermometer:
-                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Temperature").putExtra("background",  backgroundTemperature).putExtra("value", ArduinoTemperature+" ºC"));
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Temperature").putExtra("background",  backgroundTemperature).putExtra("value", ArduinoTemperature + " ºC"));
                 break;
             case R.id.buttonBrightness:
                 startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Brightness").putExtra("background",  backgroundBrightnes).putExtra("value", ArduinoBright));
                 break;
             case R.id.buttonSpeedWifi:
-                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Wi-Fi network speed").putExtra("background",  backgroundSpeedWifi).putExtra("value", (Integer.toString(speedWifi)+" Mb/s")));
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Wi-Fi network speed").putExtra("background",  backgroundSpeedWifi).putExtra("value", (Integer.toString(speedWifi) + " Mb/s")));
                 break;
             case R.id.buttonNoise:
                 noise = Math.round(noise);
@@ -496,11 +493,11 @@ public class MainActivity extends AppCompatActivity
                 }
                 break;
             case R.id.buttonHumidity:
-                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Humidity").putExtra("background",  backgroundHumidity).putExtra("value", (humidity+" %")));
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Humidity").putExtra("background",  backgroundHumidity).putExtra("value", (humidity + "%")));
                 break;
             case R.id.buttonPressure:
                 int pressureInt = (int) pressure;
-                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Pressure").putExtra("background",  backgroundPressure).putExtra("value", (pressureInt+" hPa")));
+                startActivity(new Intent(getApplicationContext(),sensorData.class).putExtra("sensor", "Pressure").putExtra("background",  backgroundPressure).putExtra("value", (pressureInt + " hPa")));
                 break;
         }
     }
