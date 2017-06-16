@@ -48,13 +48,12 @@ public class sensorData extends AppCompatActivity
     private static final String UNAVAILABLE_DATA = "Unavailable";
 
     public String sensor;
-    public ArrayList<String> auxItens =  new ArrayList(); // array aux
     public String nameBackground;
     private int type;
     private int position;
     private String value;
-    private ArrayList <String> brightness = new ArrayList();
-    private ArrayList <String> date = new ArrayList();
+    private ArrayList brightness = new ArrayList();
+    private ArrayList date = new ArrayList();
     private double humidity[] = new double[20];
     private double temperature[] = new double[20];
     private double pressure[] = new double[20];
@@ -85,7 +84,6 @@ public class sensorData extends AppCompatActivity
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         type = 0;
-
 
         // Setup spinner
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
@@ -119,8 +117,6 @@ public class sensorData extends AppCompatActivity
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(this.getResources().getColor(R.color.gray));
         }
-
-
     }
 
     @Override
@@ -206,7 +202,6 @@ public class sensorData extends AppCompatActivity
         @Override
         protected Void doInBackground(Void... arg0) {
             HttpHandler sh = new HttpHandler();
-            HttpHandler sh2 = new HttpHandler();
 
             // Making a request to url and getting response
             String jsonStr1 = sh.makeServiceCall(url+"1" , "GET");
@@ -424,7 +419,6 @@ public class sensorData extends AppCompatActivity
 
             if (type==0) {
                 View rootView = inflater.inflate(R.layout.fragment_sensor_data, container, false);
-
 
                 FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.floatingActionButton);
                 fab.setVisibility(View.GONE);

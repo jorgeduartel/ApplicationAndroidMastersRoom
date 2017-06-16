@@ -12,14 +12,13 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-public class HttpHandler { //add
+class HttpHandler { //add
 
     private static final String TAG = HttpHandler.class.getSimpleName();
 
-    public HttpHandler() {
-    }
+    HttpHandler() { }
 
-    public String makeServiceCall(String reqUrl, String requestMethod) {
+    String makeServiceCall(String reqUrl, String requestMethod) {
         String response = null;
 
         try {
@@ -43,7 +42,7 @@ public class HttpHandler { //add
     }
 
     private String convertStreamToString(InputStream is) {
-        BufferedReader reader = null;
+        BufferedReader reader;
         StringBuilder sb = new StringBuilder();
 
         String line;

@@ -1,10 +1,9 @@
 package com.example.jorgeduarte.appmastersroom;
 
-public class url
+class url
 {
-    static String url = "http://10.2.101.48:8080/";
-
-    public static String getUrl() {
-        return url;
+    static String getUrl()
+    {
+        return "http://10.2.234.226:8080/";
     }
 }
