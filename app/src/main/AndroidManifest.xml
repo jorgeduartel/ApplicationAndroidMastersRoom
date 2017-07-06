@@ -35,7 +35,7 @@
             android:theme="@style/your_own_name" />
 
         <activity
-            android:name=".sensorData"
+            android:name=".SensorData"
             android:label="@string/title_activity_sensor_data"
             android:theme="@style/your_own_name" />
         <activity android:name=".MainActivityChart"></activity>

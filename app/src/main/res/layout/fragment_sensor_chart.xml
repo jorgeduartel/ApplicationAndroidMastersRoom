@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.jorgeduarte.appmastersroom.sensorData$PlaceholderFragment">
+    tools:context="com.example.jorgeduarte.appmastersroom.SensorData$PlaceholderFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -73,7 +73,6 @@
                     android:layout_marginEnd="11dp"
                     android:layout_marginRight="8dp"
                     app:layout_constraintRight_toRightOf="@+id/colorView" />
-
             </android.support.constraint.ConstraintLayout>
 
             <com.github.mikephil.charting.charts.BarChart
@@ -91,8 +90,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 tools:ignore="ObsoleteLayoutParam" />
-
-
         </RelativeLayout>
 
     </ScrollView>

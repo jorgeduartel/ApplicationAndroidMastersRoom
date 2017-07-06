@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@color/Blue_People"
-    tools:context="com.example.jorgeduarte.appmastersroom.sensorData">
+    tools:context="com.example.jorgeduarte.appmastersroom.SensorData">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

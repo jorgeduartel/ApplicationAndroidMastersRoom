@@ -11,10 +11,11 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
-public class MainActivityChart extends AppCompatActivity {
-
+public class MainActivityChart extends AppCompatActivity
+{
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_chart);
 
@@ -40,7 +41,8 @@ public class MainActivityChart extends AppCompatActivity {
         barChart.invalidate();
     }
 
-    private ArrayList<String> getXAxisValues() {
+    private ArrayList<String> getXAxisValues()
+    {
         ArrayList<String> labels = new ArrayList<>();
         labels.add("Su");
         labels.add("Mo");
@@ -49,6 +51,7 @@ public class MainActivityChart extends AppCompatActivity {
         labels.add("Th");
         labels.add("Fr");
         labels.add("Sa");
+
         return labels;
     }
 }

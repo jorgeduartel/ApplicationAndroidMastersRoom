@@ -43,17 +43,18 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class sensorData extends AppCompatActivity
+public class SensorData extends AppCompatActivity
 {
     private static final String UNAVAILABLE_DATA = "Unavailable";
 
     public String sensor;
+    public ArrayList<String> auxItens =  new ArrayList(); // array aux
     public String nameBackground;
     private int type;
     private int position;
     private String value;
-    private ArrayList brightness = new ArrayList();
-    private ArrayList date = new ArrayList();
+    private ArrayList <String> brightness = new ArrayList();
+    private ArrayList <String> date = new ArrayList();
     private double humidity[] = new double[20];
     private double temperature[] = new double[20];
     private double pressure[] = new double[20];
@@ -61,9 +62,9 @@ public class sensorData extends AppCompatActivity
     private double noise[] = new double[20];
     private double wifiSpeed[] = new double[20];
 
-    private static String url = com.example.jorgeduarte.appmastersroom.url.getUrl()+"getDate/";
-    private static String url2= com.example.jorgeduarte.appmastersroom.url.getUrl()+"getday/0";
-    private String TAG = sensorData.class.getSimpleName();
+    private static String url = com.example.jorgeduarte.appmastersroom.URL.getURL() + "day/";
+    private static String url2= com.example.jorgeduarte.appmastersroom.URL.getURL() + "timesOfDay/0";
+    private String TAG = SensorData.class.getSimpleName();
     private ProgressDialog pDialog;
 
     @Override
@@ -84,6 +85,7 @@ public class sensorData extends AppCompatActivity
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         type = 0;
+
 
         // Setup spinner
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
@@ -202,20 +204,21 @@ public class sensorData extends AppCompatActivity
         @Override
         protected Void doInBackground(Void... arg0) {
             HttpHandler sh = new HttpHandler();
+            HttpHandler sh2 = new HttpHandler();
 
             // Making a request to url and getting response
-            String jsonStr1 = sh.makeServiceCall(url+"1" , "GET");
-            String jsonStr = sh.makeServiceCall(url+"0" , "GET");
-            String jsonStr2 = sh.makeServiceCall(url+"2" , "GET");
-            String jsonStr3 = sh.makeServiceCall(url+"3" , "GET");
-            String jsonStr4 = sh.makeServiceCall(url+"4" , "GET");
-            String jsonStr5 = sh.makeServiceCall(url+"5" , "GET");
-            String jsonStr6 = sh.makeServiceCall(url+"6" , "GET");
-            String jsonStr7 = sh.makeServiceCall(url2 , "GET");
+            String jsonStr1 = sh.makeServiceCall(url + "1", "GET");
+            String jsonStr = sh.makeServiceCall(url + "0", "GET");
+            String jsonStr2 = sh.makeServiceCall(url + "2", "GET");
+            String jsonStr3 = sh.makeServiceCall(url + "3", "GET");
+            String jsonStr4 = sh.makeServiceCall(url + "4", "GET");
+            String jsonStr5 = sh.makeServiceCall(url + "5", "GET");
+            String jsonStr6 = sh.makeServiceCall(url + "6", "GET");
+            String jsonStr7 = sh.makeServiceCall(url2, "GET");
 
 
 
-            Log.e(TAG, "Response from url: " + jsonStr7);
+            Log.e(TAG, "Response from URL: " + jsonStr7);
 
             if (jsonStr7 != null) {
                 try {
@@ -228,107 +231,103 @@ public class sensorData extends AppCompatActivity
                     JSONObject jsonObj5 = new JSONObject(jsonStr5);
                     JSONObject jsonObj6 = new JSONObject(jsonStr6);
                     JSONObject jsonObj7 = new JSONObject(jsonStr7);
-                    JSONArray values = jsonObj7.getJSONArray("values");
-                    //people =  jsonObj.getString("people");
+                    JSONArray values = jsonObj7.getJSONArray("TimesOfDay");
 
-                    date.add(0, jsonObj.getString("date1"));
-                    date.add(1, jsonObj1.getString("date1"));
-                    date.add(2, jsonObj2.getString("date1"));
-                    date.add(3, jsonObj3.getString("date1"));
-                    date.add(4, jsonObj4.getString("date1"));
-                    date.add(5, jsonObj5.getString("date1"));
-                    date.add(6, jsonObj6.getString("date1"));
+                    date.add(0, jsonObj.getString("Date"));
+                    date.add(1, jsonObj1.getString("Date"));
+                    date.add(2, jsonObj2.getString("Date"));
+                    date.add(3, jsonObj3.getString("Date"));
+                    date.add(4, jsonObj4.getString("Date"));
+                    date.add(5, jsonObj5.getString("Date"));
+                    date.add(6, jsonObj6.getString("Date"));
 
-                    brightness.add(0, jsonObj.getString("brightAverage"));
-                    brightness.add(1, jsonObj1.getString("brightAverage"));
-                    brightness.add(2, jsonObj2.getString("brightAverage"));
-                    brightness.add(3, jsonObj3.getString("brightAverage"));
-                    brightness.add(4, jsonObj4.getString("brightAverage"));
-                    brightness.add(5, jsonObj5.getString("brightAverage"));
-                    brightness.add(6, jsonObj6.getString("brightAverage"));
+                    brightness.add(0, jsonObj.getString("Brightness"));
+                    brightness.add(1, jsonObj1.getString("Brightness"));
+                    brightness.add(2, jsonObj2.getString("Brightness"));
+                    brightness.add(3, jsonObj3.getString("Brightness"));
+                    brightness.add(4, jsonObj4.getString("Brightness"));
+                    brightness.add(5, jsonObj5.getString("Brightness"));
+                    brightness.add(6, jsonObj6.getString("Brightness"));
 
-                    humidity[0] = jsonObj.getDouble("humidityAverage");
-                    humidity[1] = jsonObj1.getDouble("humidityAverage");
-                    humidity[2] = jsonObj2.getDouble("humidityAverage");
-                    humidity[3] = jsonObj3.getDouble("humidityAverage");
-                    humidity[4] = jsonObj4.getDouble("humidityAverage");
-                    humidity[5] = jsonObj5.getDouble("humidityAverage");
-                    humidity[6] = jsonObj6.getDouble("humidityAverage");
+                    humidity[0] = jsonObj.getDouble("Humidity");
+                    humidity[1] = jsonObj1.getDouble("Humidity");
+                    humidity[2] = jsonObj2.getDouble("Humidity");
+                    humidity[3] = jsonObj3.getDouble("Humidity");
+                    humidity[4] = jsonObj4.getDouble("Humidity");
+                    humidity[5] = jsonObj5.getDouble("Humidity");
+                    humidity[6] = jsonObj6.getDouble("Humidity");
 
-                    temperature[0] = jsonObj.getDouble("temperatureAverage");
-                    temperature[1] = jsonObj1.getDouble("temperatureAverage");
-                    temperature[2] = jsonObj2.getDouble("temperatureAverage");
-                    temperature[3] = jsonObj3.getDouble("temperatureAverage");
-                    temperature[4] = jsonObj4.getDouble("temperatureAverage");
-                    temperature[5] = jsonObj5.getDouble("temperatureAverage");
-                    temperature[6] = jsonObj6.getDouble("temperatureAverage");
+                    temperature[0] = jsonObj.getDouble("Temperature");
+                    temperature[1] = jsonObj1.getDouble("Temperature");
+                    temperature[2] = jsonObj2.getDouble("Temperature");
+                    temperature[3] = jsonObj3.getDouble("Temperature");
+                    temperature[4] = jsonObj4.getDouble("Temperature");
+                    temperature[5] = jsonObj5.getDouble("Temperature");
+                    temperature[6] = jsonObj6.getDouble("Temperature");
 
-                    pressure[0] = jsonObj.getDouble("pressureAverage");
-                    pressure[1] = jsonObj1.getDouble("pressureAverage");
-                    pressure[2] = jsonObj2.getDouble("pressureAverage");
-                    pressure[3] = jsonObj3.getDouble("pressureAverage");
-                    pressure[4] = jsonObj4.getDouble("pressureAverage");
-                    pressure[5] = jsonObj5.getDouble("pressureAverage");
-                    pressure[6] = jsonObj6.getDouble("pressureAverage");
+                    pressure[0] = jsonObj.getDouble("Pressure");
+                    pressure[1] = jsonObj1.getDouble("Pressure");
+                    pressure[2] = jsonObj2.getDouble("Pressure");
+                    pressure[3] = jsonObj3.getDouble("Pressure");
+                    pressure[4] = jsonObj4.getDouble("Pressure");
+                    pressure[5] = jsonObj5.getDouble("Pressure");
+                    pressure[6] = jsonObj6.getDouble("Pressure");
 
-                    people[0] = jsonObj.getDouble("peopleAverage");
-                    people[1] = jsonObj1.getDouble("peopleAverage");
-                    people[2] = jsonObj2.getDouble("peopleAverage");
-                    people[3] = jsonObj3.getDouble("peopleAverage");
-                    people[4] = jsonObj4.getDouble("peopleAverage");
-                    people[5] = jsonObj5.getDouble("peopleAverage");
-                    people[6] = jsonObj6.getDouble("peopleAverage");
+                    people[0] = jsonObj.getDouble("NumberOfPeople");
+                    people[1] = jsonObj1.getDouble("NumberOfPeople");
+                    people[2] = jsonObj2.getDouble("NumberOfPeople");
+                    people[3] = jsonObj3.getDouble("NumberOfPeople");
+                    people[4] = jsonObj4.getDouble("NumberOfPeople");
+                    people[5] = jsonObj5.getDouble("NumberOfPeople");
+                    people[6] = jsonObj6.getDouble("NumberOfPeople");
 
-                    noise[0] = jsonObj.getDouble("noiseAverage");
-                    noise[1] = jsonObj1.getDouble("noiseAverage");
-                    noise[2] = jsonObj2.getDouble("noiseAverage");
-                    noise[3] = jsonObj3.getDouble("noiseAverage");
-                    noise[4] = jsonObj4.getDouble("noiseAverage");
-                    noise[5] = jsonObj5.getDouble("noiseAverage");
-                    noise[6] = jsonObj6.getDouble("noiseAverage");
+                    noise[0] = jsonObj.getDouble("Noise");
+                    noise[1] = jsonObj1.getDouble("Noise");
+                    noise[2] = jsonObj2.getDouble("Noise");
+                    noise[3] = jsonObj3.getDouble("Noise");
+                    noise[4] = jsonObj4.getDouble("Noise");
+                    noise[5] = jsonObj5.getDouble("Noise");
+                    noise[6] = jsonObj6.getDouble("Noise");
 
-                    wifiSpeed[0] = jsonObj.getDouble("wifiAverage");
-                    wifiSpeed[1] = jsonObj1.getDouble("wifiAverage");
-                    wifiSpeed[2] = jsonObj2.getDouble("wifiAverage");
-                    wifiSpeed[3] = jsonObj3.getDouble("wifiAverage");
-                    wifiSpeed[4] = jsonObj4.getDouble("wifiAverage");
-                    wifiSpeed[5] = jsonObj5.getDouble("wifiAverage");
-                    wifiSpeed[6] = jsonObj6.getDouble("wifiAverage");
+                    wifiSpeed[0] = jsonObj.getDouble("WiFiSpeed");
+                    wifiSpeed[1] = jsonObj1.getDouble("WiFiSpeed");
+                    wifiSpeed[2] = jsonObj2.getDouble("WiFiSpeed");
+                    wifiSpeed[3] = jsonObj3.getDouble("WiFiSpeed");
+                    wifiSpeed[4] = jsonObj4.getDouble("WiFiSpeed");
+                    wifiSpeed[5] = jsonObj5.getDouble("WiFiSpeed");
+                    wifiSpeed[6] = jsonObj6.getDouble("WiFiSpeed");
 
                     for (int i = 0; i < values.length(); i++) {
                         JSONObject value = values.getJSONObject(i);
-                        Log.e(TAG, "Response value: " + (i+7));
-                        humidity[(i+7)] = value.getDouble("humidity");
-                        temperature[(i+7)] = value.getDouble("rpTemperature");
-                        wifiSpeed[(i+7)] = value.getDouble("wifiQuality");
-                        noise[(i+7)] = value.getDouble("noise");
-                        people[(i+7)] = value.getDouble("nPessoas");
-                        pressure[(i+7)] = value.getDouble("pressure");
-                        brightness.add((i+7), value.getString("arduinoBrightValue"));
-                        date.add((i+7), value.getString("hour"));
-
+                        Log.e(TAG, "Response value: " + (i + 7));
+                        humidity[(i + 7)] = value.getDouble("Humidity");
+                        temperature[(i + 7)] = value.getDouble("Temperature");
+                        wifiSpeed[(i + 7)] = value.getDouble("WiFiSpeed");
+                        noise[(i + 7)] = value.getDouble("Noise");
+                        people[(i + 7)] = value.getDouble("NumberOfPeople");
+                        pressure[(i + 7)] = value.getDouble("Pressure");
+                        brightness.add((i + 7),  value.getString("Brightness"));
+                        date.add((i + 7), value.getString("Hour"));
                     }
 
-
-
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container, PlaceholderFragment.newInstance(position, nameBackground,sensor, type, value, brightness, date, humidity, temperature, pressure, people, noise, wifiSpeed))
+                            .replace(R.id.container, PlaceholderFragment.newInstance(position, nameBackground, sensor, type, value, brightness, date, humidity, temperature, pressure, people, noise, wifiSpeed))
                             .commit();
 
                 } catch (final JSONException e) {
-                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    Log.e(TAG, "JSON parsing error: " + e.getMessage());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "Json parsing error: " + e.getMessage(),
+                                    "JSON parsing error: " + e.getMessage(),
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
                     });
                 }
             } else {
-                Log.e(TAG, "Couldn't get json from server.");
+                Log.e(TAG, "Couldn't get JSON from server.");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -347,7 +346,7 @@ public class sensorData extends AppCompatActivity
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(sensorData.this);
+            pDialog = new ProgressDialog(SensorData.this);
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -359,9 +358,9 @@ public class sensorData extends AppCompatActivity
             // Dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
-            /**
+            /*
              * Updating parsed JSON data into ListView
-             * */
+             */
 
         }
     }
@@ -420,6 +419,7 @@ public class sensorData extends AppCompatActivity
             if (type==0) {
                 View rootView = inflater.inflate(R.layout.fragment_sensor_data, container, false);
 
+
                 FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.floatingActionButton);
                 fab.setVisibility(View.GONE);
                 fab.setOnClickListener(new View.OnClickListener() {
@@ -445,8 +445,7 @@ public class sensorData extends AppCompatActivity
                 TextView textView2 = new TextView(getActivity().getApplicationContext());
                 textView2.setText("      Date                                                                     Value");
 
-                if(getArguments().getDoubleArray("Temperature")[1] > 0 )
-                {
+
 
                     switch (sensor) {
                         case "Temperature":
@@ -508,13 +507,13 @@ public class sensorData extends AppCompatActivity
                         case "Humidity":
 
                             if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                                getData(sensor, "%", 0, 6);
+                                getData(sensor, " %", 0, 6);
                             }else
                             if(getArguments().getInt(ARG_SECTION_NUMBER) == 2){
-                                getData(sensor, "%", 0, 2);
+                                getData(sensor, " %", 0, 2);
                             }else
                             if(getArguments().getInt(ARG_SECTION_NUMBER) == 3){
-                                getData(sensor, "%", 7, 19);
+                                getData(sensor, " %", 7, 19);
                             }
                             break;
                         case "Pressure":
@@ -534,7 +533,7 @@ public class sensorData extends AppCompatActivity
                     listView = (ListView) rootView.findViewById(R.id.dataList);
                     listView.setAdapter(adapter);
                     listView.addHeaderView(textView2);
-                }
+
                 String nameBackground = bundle.getString("nameBackground");
 
                 ImageView imageSensor = (ImageView) rootView.findViewById(R.id.imageSensor);
@@ -561,7 +560,7 @@ public class sensorData extends AppCompatActivity
 
                 ArrayList<BarEntry> group1 = new ArrayList<>();
 
-                if(getArguments().getDoubleArray("Temperature")[1] > 0) {
+
 
                     if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
                         if(sensor.contains("Brightness")){
@@ -602,7 +601,7 @@ public class sensorData extends AppCompatActivity
                     //   barChart.setDescription("My Grouped Bar Chart");
                     barChart.animateXY(2000, 2000);
                     barChart.invalidate();
-                }
+
                 String nameBackground = bundle.getString("nameBackground");
 
                 ImageView imageSensor = (ImageView) rootView.findViewById(R.id.imageSensor);

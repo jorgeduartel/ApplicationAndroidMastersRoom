@@ -16,16 +16,17 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Activity_PeopleRoom extends AppCompatActivity {
-
+public class Activity_PeopleRoom extends AppCompatActivity
+{
     // URL to get contacts JSON
     private String TAG = MainActivity.class.getSimpleName();
-    private static String baseUrl = com.example.jorgeduarte.appmastersroom.url.getUrl()+"sendPeople/";
+    private static String baseURL = URL.getURL() + "sendNumberOfPeople/";
     private static String url;
-    private ProgressDialog pDialog;
+    private ProgressDialog progressDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people_room);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -34,72 +35,76 @@ public class Activity_PeopleRoom extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button buttonSend = (Button) findViewById(R.id.buttonSend);
-        buttonSend.setOnClickListener(new View.OnClickListener() {
+        buttonSend.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 TextView fab = (TextView) findViewById(R.id.peopleLable);
                 Log.e(TAG, "SEND: " + fab.getText().toString());
-                url = baseUrl+fab.getText().toString();
+                url = baseURL+fab.getText().toString();
                 Log.e(TAG, "URL: " + url);
 
-                 new GetData().execute(); // Quando servidor está a funcionar
+                 new GetData().execute(); // Quando o servidor está a funcionar
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }
         });
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivityForResult(myIntent, 0);
-       // startActivity(new Intent(getApplicationContext(),MainActivity.class));
         return true;
     }
 
     /**
-     * Async task class to get json by making HTTP call
+     * Async task class to get JSON by making HTTP call
      */
-    private class GetData extends AsyncTask<Void, Void, Void> {
-
+    private class GetData extends AsyncTask<Void, Void, Void>
+    {
         @Override
-        protected Void doInBackground(Void... arg0) {
+        protected Void doInBackground(Void... arg0)
+        {
             HttpHandler sh = new HttpHandler();
 
-            // Making a request to url and getting response
+            // Making a request to URL and getting response
             String jsonStr = sh.makeServiceCall(url, "POST");
 
-            Log.e(TAG, "Response from url: " + jsonStr);
+            Log.e(TAG, "Response from URL: " + jsonStr);
 
-            if (jsonStr != null) {
-                try {
+            if (jsonStr != null)
+            {
+                try
+                {
                     JSONObject jsonObj = new JSONObject(jsonStr);
-                    String response = jsonObj.getString("people");
-
+                    String response = jsonObj.getString("NumberOfPeople");
 
                     Log.e(TAG, "Response POST people: " + response);
 
-                    // update();
-
-                } catch (final JSONException e) {
-                    Log.e(TAG, "Json parsing error: " + e.getMessage());
-                    runOnUiThread(new Runnable() {
+                }
+                catch (final JSONException e)
+                {
+                    Log.e(TAG, "JSON parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable()
+                    {
                         @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Json parsing error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG)
-                                    .show();
+                        public void run()
+                        {
+                            Toast.makeText(getApplicationContext(), "JSON parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
                 }
-            } else {
-                Log.e(TAG, "Couldn't get json from server.");
-                runOnUiThread(new Runnable() {
+            }
+            else
+            {
+                Log.e(TAG, "Couldn't get JSON from server.");
+                runOnUiThread(new Runnable()
+                {
                     @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),
-                                "No server connection!",
-                                Toast.LENGTH_LONG)
-                                .show();
+                    public void run()
+                    {
+                        Toast.makeText(getApplicationContext(), "No server connection!", Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -108,21 +113,23 @@ public class Activity_PeopleRoom extends AppCompatActivity {
         }
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(Activity_PeopleRoom.this);
-            pDialog.setMessage("Please wait...");
-            pDialog.setCancelable(false);
-            pDialog.show();
+            progressDialog = new ProgressDialog(Activity_PeopleRoom.this);
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
         }
 
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute(Void result)
+        {
             super.onPostExecute(result);
             // Dismiss the progress dialog
-            if (pDialog.isShowing())
-                pDialog.dismiss();
+            if (progressDialog.isShowing())
+                progressDialog.dismiss();
             /*
               Updating parsed JSON data into ListView
               */

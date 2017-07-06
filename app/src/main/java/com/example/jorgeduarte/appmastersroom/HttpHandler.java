@@ -12,54 +12,76 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-class HttpHandler { //add
-
+class HttpHandler
+{
     private static final String TAG = HttpHandler.class.getSimpleName();
 
     HttpHandler() { }
 
-    String makeServiceCall(String reqUrl, String requestMethod) {
+    String makeServiceCall(String reqURL, String requestMethod)
+    {
         String response = null;
 
-        try {
-            URL url = new URL(reqUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        try
+        {
+            URL URL = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) URL.openConnection();
             conn.setRequestMethod(requestMethod);
 
             // read the response
             InputStream in = new BufferedInputStream(conn.getInputStream());
             response = convertStreamToString(in);
-        } catch (MalformedURLException e) {
+        }
+        catch (MalformedURLException e)
+        {
             Log.e(TAG, "MalformedURLException: " + e.getMessage());
-        } catch (ProtocolException e) {
+        }
+        catch (ProtocolException e)
+        {
             Log.e(TAG, "ProtocolException: " + e.getMessage());
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             Log.e(TAG, "IOException: " + e.getMessage());
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Log.e(TAG, "Exception: " + e.getMessage());
         }
+
         return response;
     }
 
-    private String convertStreamToString(InputStream is) {
+    private String convertStreamToString(InputStream is)
+    {
         BufferedReader reader;
-        StringBuilder sb = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
 
         String line;
-        try {
+        try
+        {
             reader = new BufferedReader(new InputStreamReader(is));
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
+            while ((line = reader.readLine()) != null)
+            {
+                stringBuilder.append(line);
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
-        } finally {
-            try {
+        }
+        finally
+        {
+            try
+            {
                 is.close();
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 e.printStackTrace();
             }
         }
-        return sb.toString();
+
+        return stringBuilder.toString();
     }
 }
